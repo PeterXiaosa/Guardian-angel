@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.koushikdutta.async.http.WebSocket;
 
 import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.framing.CloseFrame;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.io.IOException;
@@ -30,9 +31,11 @@ public class SocketActivity extends AppCompatActivity {
 
     EditText et_intpu;
     Button btn_send;
+    Button btn_close;
+    Button btn_connect;
 
-    String urlStr = "ws://106.15.92.137:8080/app/websocket";
-    WebSocket mainWebSocket;
+//    String urlStr = "ws://106.15.92.137:8080/app/websocket";
+    String urlStr = "ws://10.0.2.2:8080/mywebsocket/abcd123/newparams";
     WebSocketClient mainWebSocketClient;
     Handler handler;
 
@@ -43,6 +46,8 @@ public class SocketActivity extends AppCompatActivity {
 
         et_intpu = findViewById(R.id.et_input);
         btn_send = findViewById(R.id.btn_send);
+        btn_close = findViewById(R.id.btn_close);
+        btn_connect = findViewById(R.id.btn_connect);
 
         handler = new Handler(Looper.getMainLooper());
 
@@ -51,6 +56,21 @@ public class SocketActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mainWebSocketClient.send(et_intpu.getText().toString());
+            }
+        });
+
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                mainWebSocketClient.close();
+                mainWebSocketClient.close(CloseFrame.NORMAL, "test close");
+            }
+        });
+
+        btn_connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainWebSocketClient.connect();
             }
         });
     }

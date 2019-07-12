@@ -5,10 +5,20 @@ import android.os.Bundle;
 
 import com.peter.guardianangel.annotation.InjectUtils;
 
-public class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity {
+
+    protected abstract int getLayoutId();
+
+    protected void initData(){}
+
+    protected void initView(){}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        InjectUtils.inject(this);
+        setContentView(getLayoutId());
+
+        initData();
+        initView();
     }
 }
