@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">天使守护</string>
+    <string name="title_activity_match_code">MatchCodeActivity</string>
     <!--<string name="app_name">Guardian angel</string>-->
 </resources>

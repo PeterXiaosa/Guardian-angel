@@ -1,5 +1,8 @@
-package com.example.utillib;
+package com.peter.guardianangel.retrofit;
 
+import com.peter.guardianangel.bean.User;
+
+import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
@@ -7,17 +10,17 @@ import retrofit2.http.POST;
 
 public interface Api {
     //baseUrl
-    String BASE_URL = "http://106.15.92.137:8080/app/";
-//    String BASE_URL = "http://10.0.2.2:8080/";
 //    String BASE_URL = "http://106.15.92.137:8080/app/";
-//    String BASE_URL =  "http://106.15.92.137:8080/";
+    String BASE_URL = "http://192.168.31.174:8080/";
 
-//    @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
+    @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
 
     //登录
-//    @POST("certificate/login")
-//    Observable<LoginModel> login(@Body UserInfo userInfo);
+    @POST("certificate/login")
+    Observable<BaseResponse> login(@Body User userInfo);
 
+    @POST("/protect/matchcode/generate")
+    Observable<BaseResponse> getMatchCode(@Body RequestBody body);
     //登录
 //    @POST("user/register")
 //    Observable<RegisterModel> register(@Body UserInfo userInfo);

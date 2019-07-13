@@ -1,0 +1,68 @@
+package com.peter.guardianangel.data;
+
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.telephony.TelephonyManager;
+
+public class UserData {
+    private static final UserData ourInstance = new UserData();
+
+    public static UserData getInstance() {
+        return ourInstance;
+    }
+
+    private String deviceId;
+
+    private Context context;
+
+    private UserData() {
+    }
+
+    public void init(Context context){
+        this.context = context;
+        deviceId = getInnerDeviceId(context);
+    }
+
+    public String getDeviceId(){
+        return deviceId;
+    }
+
+    private String getInnerDeviceId(Context context) {
+        String serial = "";
+        try {
+            serial = Build.class.getField("SERIAL").get(null).toString();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        String szDevIDShort = "35" + //we make this look like a valid IMEI
+                Build.BOARD.length() % 10 +
+                Build.BRAND.length() % 10 +
+                Build.CPU_ABI.length() % 10 +
+                Build.DEVICE.length() % 10 +
+                Build.DISPLAY.length() % 10 +
+                Build.HOST.length() % 10 +
+                Build.ID.length() % 10 +
+                Build.MANUFACTURER.length() % 10 +
+                Build.MODEL.length() % 10 +
+                Build.PRODUCT.length() % 10 +
+                Build.TAGS.length() % 10 +
+                Build.TYPE.length() % 10 +
+                Build.USER.length() % 10; //13
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            return szDevIDShort;
+        }
+        String devid = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+        if(devid != null) {
+            szDevIDShort = szDevIDShort + serial + devid;
+        }else {
+            szDevIDShort = szDevIDShort + serial;
+        }
+
+        return szDevIDShort;
+    }
+}

@@ -1,4 +1,4 @@
-package com.example.utillib;
+package com.peter.guardianangel.retrofit;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 
@@ -37,7 +37,11 @@ public abstract class ApiCallback<T> extends DisposableObserver<T> {
 
     @Override
     public void onNext(T value) {
-        onSuccess(value);
+        if (value instanceof BaseResponse) {
+            onSuccess(value);
+        }else {
+            onError(new Throwable("invalid data"));
+        }
     }
 
     @Override

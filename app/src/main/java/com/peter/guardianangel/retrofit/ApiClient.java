@@ -1,5 +1,6 @@
-package com.example.utillib;
+package com.peter.guardianangel.retrofit;
 
+import com.example.utillib.BuildConfig;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
