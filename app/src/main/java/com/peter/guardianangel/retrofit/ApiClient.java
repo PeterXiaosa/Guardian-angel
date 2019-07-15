@@ -18,6 +18,7 @@ public class ApiClient {
     public static Retrofit retrofit(){
         if(mRetrofit == null){
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            // TODO 通过添加Interceptor来给URL添加公共参数
 
             if (BuildConfig.DEBUG){
                 // Log信息拦截器
@@ -29,7 +30,7 @@ public class ApiClient {
             OkHttpClient okHttpClient = builder.build();
             okHttpClient.newBuilder().connectTimeout(TIME_OUT, TimeUnit.SECONDS);
             mRetrofit = new Retrofit.Builder()
-                    .baseUrl(Api.BASE_URL)
+                    .baseUrl(String.format(Api.BASE_URL, Api.IP))
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .client(okHttpClient)

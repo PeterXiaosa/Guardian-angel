@@ -11,7 +11,8 @@ import retrofit2.http.POST;
 public interface Api {
     //baseUrl
 //    String BASE_URL = "http://106.15.92.137:8080/app/";
-    String BASE_URL = "http://192.168.31.174:8080/";
+    String IP = "192.168.31.174";
+    String BASE_URL = "http://%s:8080/";
 
     @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
 

@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.peter.guardianangel.adapter.MessageAdapter;
 import com.peter.guardianangel.data.UserData;
+import com.peter.guardianangel.retrofit.Api;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.framing.CloseFrame;
@@ -49,7 +50,8 @@ public class SocketActivity extends AppCompatActivity {
     Button btn_connect;
 
 //    String urlStr = "ws://106.15.92.137:8080/app/websocket";
-    String urlStr = "ws://192.168.31.174:8080/mywebsocket/%s/%s";
+//192.168.31.174
+    String urlStr = "ws://%s:8080/mywebsocket/%s/%s";
     WebSocketClient mainWebSocketClient;
     Handler handler;
 
@@ -114,7 +116,7 @@ public class SocketActivity extends AppCompatActivity {
 
     private void longConnectConfig(){
         try {
-            String realUrl = String.format(urlStr, et_intpu.getText().toString(), UserData.getInstance().getDeviceId());
+            String realUrl = String.format(urlStr, Api.IP, et_intpu.getText().toString(), UserData.getInstance().getDeviceId());
             URI uri = new URI(realUrl);
             mainWebSocketClient = new WebSocketClient(uri) {
                 @Override

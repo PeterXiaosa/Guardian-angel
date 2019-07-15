@@ -22,6 +22,7 @@ import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.mvp.MvpActivity;
 import com.peter.guardianangel.mvp.contracts.presenter.LoginPresenter;
 import com.peter.guardianangel.mvp.contracts.view.LoginView;
+import com.peter.guardianangel.util.DeviceIdentifier;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -149,17 +150,21 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
 
             for (int i = 0; i < permissions.length; i++) {
                 if (permissions[i].equals(Manifest.permission.READ_PHONE_STATE)) {
-                    if (grantResults[i] != -1) {
-//                        initDeviceID();
+                    if (grantResults[i] != PackageManager.PERMISSION_DENIED) {
+                        // Get the Permission
+                        // Get the deviceId.
+                        DeviceIdentifier.initDeviceId(this);
+                    }else {
+                        // Forbidden to get permission
                     }
                 }
                 if (permissions[i].equals(Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                    if (grantResults[i] != -1) {
+                    if (grantResults[i] != PackageManager.PERMISSION_DENIED) {
                         locationFlags += 1;
                     }
                 }
                 if (permissions[i].equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    if (grantResults[i] != -1) {
+                    if (grantResults[i] != PackageManager.PERMISSION_DENIED) {
                         locationFlags += 1;
                     }
                 }
