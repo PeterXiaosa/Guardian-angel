@@ -48,7 +48,7 @@
                 android:focusableInTouchMode="true"
                 android:background="@drawable/rounded_edittext">
                 <EditText
-                    android:id="@+id/activity_login_et_account"
+                    android:id="@+id/activity_login_et_phoneNum"
                     android:background="@null"
                     android:layout_width="328dp"
                     android:layout_height="69dp"
@@ -77,7 +77,7 @@
                 android:layout_below="@+id/activity_login_rl_account"
                 android:background="@drawable/rounded_edittext">
                 <EditText
-                    android:id="@+id/activity_login_et_password"
+                    android:id="@+id/activity_login_et_checkNum"
                     android:layout_width="229dp"
                     android:layout_height="69dp"
                     android:paddingStart="10dp"
@@ -97,22 +97,22 @@
                     android:background="@color/login_underline"
                     android:layout_below="@+id/activity_login_et_checkNum"/>
                 <!--<TextView-->
-                <!--android:id="@+id/activity_login_tv_verificationCode"-->
-                <!--android:layout_width="99dp"-->
-                <!--android:layout_height="35dp"-->
-                <!--android:textSize="16sp"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:text="@string/activity_login_verifiedCode"-->
-                <!--android:gravity="center"-->
-                <!--android:layout_toRightOf="@+id/activity_login_et_checkNum"-->
-                <!--android:background="@drawable/activity_login_btn_send_gray"-->
-                <!--android:textColor="@color/text_get_verification_code"/>-->
+                    <!--android:id="@+id/activity_login_tv_verificationCode"-->
+                    <!--android:layout_width="99dp"-->
+                    <!--android:layout_height="35dp"-->
+                    <!--android:textSize="16sp"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:text="@string/activity_login_verifiedCode"-->
+                    <!--android:gravity="center"-->
+                    <!--android:layout_toRightOf="@+id/activity_login_et_checkNum"-->
+                    <!--android:background="@drawable/activity_login_btn_send_gray"-->
+                    <!--android:textColor="@color/text_get_verification_code"/>-->
             </RelativeLayout>
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/activity_login_btn_login"
+            android:id="@+id/activity_login_tv_login"
             android:layout_width="328dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"

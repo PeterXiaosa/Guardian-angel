@@ -3,4 +3,67 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!--普通颜色-->
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="black">#ff000000</color>
+    <color name="gray">#666666</color>
+    <color name="light_gray">#999999</color>
+    <color name="light_gray_map">#808080</color>
+    <color name="shop_address_gray">#9B9B9B</color>
+    <color name="title_blue">#03A9F4</color>
+    <color name="mid_gray">#7D7D7D</color>
+    <color name="record_gray">#626262</color>
+    <color name="record_integer">#6AC1B1</color>
+    <color name="record_integer_point">#43A6DD</color>
+    <color name="no_score_or_sale_record">#C6C6C6</color>
+
+    <color name="dialog_title">#ffff0000</color>
+    <!--<color name="common_background">#f3f4f6</color>-->
+    <color name="common_background">#EBEBEB</color>
+    <color name="txt_color_gray_3">#cbc4c6</color>
+    <color name="pink">#ff5d65</color>
+    <color name="brown">#cccccc</color>
+    <color name="pale_pink">#cbc4c6</color>
+    <color name="divider">#e8e3e3</color>
+    <color name="blue">#3299cc</color>
+    <color name="selctor_blue">#03A9F4</color>
+    <color name="selctor_gray">#ECECEC</color>
+    <color name="selector_border">#A5A5A5</color>
+    <color name="tabcolor">#6e686a</color>
+    <color name="dark_black">#333333</color>
+    <color name="red">#FF0000</color>
+    <color name="login_underline">#DADADA</color>
+
+    <color name="light_grey">#ffbebebe</color>
+    <color name="address_text_color">#737373</color>
+    <color name="my_wallet_type_personal">#61C3A2</color>
+    <color name="my_wallet_type_shop">#039AF4</color>
+    <color name="retail_and_code_example">#5A5A5A</color>
+
+    <!-- Login界面的颜色值-->
+    <color name="login_blue">#038BF5</color>
+    <color name="bg_get_verification_code">#A3A3A3</color>
+    <color name="text_get_verification_code">#454545</color>
+
+    <!--<color name="common_top_bar_color">#5677fc</color>-->
+    <color name="common_top_bar_color">#000000</color>
+    <color name="common_top_bar_title_font">#333333</color>
+    <color name="dialog_text">#0066CC</color>
+
+    <!-- 下拉刷新时，颜色值 -->
+    <color name="swiperefresh_color1">#ff00ddff</color>
+    <color name="swiperefresh_color2">#ffffbb33</color>
+    <color name="swiperefresh_color3">#ffff4444</color>
+    <color name="swiperefresh_color4">#ffaa66cc</color>
+
+    <color name="bg_list_inweek">#FF99CC</color>
+    <color name="bg_list_outweek">#FFCC66</color>
+    <color name="bg_list_no">#99FF99</color>
+
+    <color name="textColor">#CC99FF</color>
+    <color name="progressColor">#CC0033</color>
+    <color name="progressColorBlue">#3366FF</color>
+    <color name="progressColorGreen">#66FF33</color>
 </resources>

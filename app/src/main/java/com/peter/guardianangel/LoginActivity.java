@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.peter.guardianangel.activity.MatchCodeActivity;
@@ -35,8 +36,9 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginView {
+
     EditText et_account, et_password;
-    Button btn_login;
+    TextView btn_login;
 
     @Override
     protected int getLayoutId() {
