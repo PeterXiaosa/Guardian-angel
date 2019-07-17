@@ -4,20 +4,17 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.peter.guardianangel.activity.MatchCodeActivity;
-import com.peter.guardianangel.base.BasePresenter;
+import com.peter.guardianangel.activity.ProtectActivity;
+import com.peter.guardianangel.activity.UserActivity;
 import com.peter.guardianangel.bean.User;
 import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.mvp.MvpActivity;
@@ -25,20 +22,26 @@ import com.peter.guardianangel.mvp.contracts.presenter.LoginPresenter;
 import com.peter.guardianangel.mvp.contracts.view.LoginView;
 import com.peter.guardianangel.util.DeviceIdentifier;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
-public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginView {
+public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginView, View.OnFocusChangeListener {
 
     EditText et_account, et_password;
     TextView btn_login;
+
+    @BindView(R.id.activity_login_view_underline_account)
+    View underline_account;
+    @BindView(R.id.activity_login_view_underline_password)
+    View underline_password;
 
     @Override
     protected int getLayoutId() {
@@ -65,16 +68,13 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         et_password = findViewById(R.id.activity_login_et_password);
         btn_login = findViewById(R.id.activity_login_btn_login);
 
-        btn_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
+        et_account.setOnFocusChangeListener(this);
+        et_password.setOnFocusChangeListener(this);
     }
 
     @SuppressLint("CheckResult")
-    private void login() {
+    @OnClick(R.id.activity_login_btn_login)
+    public void login() {
         String account = et_account.getText().toString();
         String password = et_password.getText().toString();
         final User user = new User();
@@ -93,10 +93,10 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
                 @Override
                 public Boolean apply(User user) throws Exception {
                     if (user.getAccount().trim().isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Account is null", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "请输入账户", Toast.LENGTH_SHORT).show();
                         return false;
                     } else if (user.getPassword().trim().isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Password is null", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "请输入密码", Toast.LENGTH_SHORT).show();
                         return false;
                     } else {
                         return true;
@@ -105,7 +105,9 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
             }).subscribe(new Consumer<Boolean>() {
                 @Override
                 public void accept(Boolean aBoolean) throws Exception {
-                    presenter.login(user);
+                    if (aBoolean) {
+                        presenter.login(user);
+                    }
                 }
             });
         }catch (Exception e){
@@ -113,10 +115,12 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         }
     }
 
+
     @Override
     public void loginSuccess() {
         Toast.makeText(this, "登录成功啦", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(LoginActivity.this, MatchCodeActivity.class));
+//        startActivity(new Intent(LoginActivity.this, MatchCodeActivity.class));
+        startActivity(new Intent(LoginActivity.this, ProtectActivity.class));
     }
 
     @Override
@@ -188,14 +192,29 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
             permissionList.add(Manifest.permission.READ_PHONE_STATE);
         }
 
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-//                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-//            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-//        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
 
         if (!permissionList.isEmpty()) {
             ActivityCompat.requestPermissions(this, permissionList.toArray(new String[permissionList.size()]), 1);
         } else {}
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean b) {
+        if (view.getId() == R.id.activity_login_et_account) {
+            if (b){
+                underline_account.setBackgroundColor(getResources().getColor(R.color.login_blue, null));
+                underline_password.setBackgroundColor(getResources().getColor(R.color.login_underline, null));
+            }
+        }else if (view.getId() == R.id.activity_login_et_password) {
+            if (b) {
+                underline_account.setBackgroundColor(getResources().getColor(R.color.login_underline, null));
+                underline_password.setBackgroundColor(getResources().getColor(R.color.login_blue, null));
+            }
+        }
     }
 }

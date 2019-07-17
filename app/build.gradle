@@ -2,18 +2,33 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
+
     defaultConfig {
-        applicationId "com.peter.myapplication"
+        applicationId "com.peter.guardianangel"
         minSdkVersion 23
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        myConfig {
+            keyAlias 'peter'
+            keyPassword 'fhc123456'
+            storeFile file('./mykeystore.jks')
+            storePassword 'fhc123456'
+        }
+    }
+
     buildTypes {
+        debug {
+            signingConfig signingConfigs.myConfig
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.myConfig
         }
     }
 }
@@ -22,24 +37,26 @@ repositories {
     mavenCentral()
 }
 
+configurations.all {
+    resolutionStrategy {
+        force 'com.android.support:support-annotations:27.0.2'
+    }
+}
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:design:26.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     implementation project(':utillib')
-
     implementation 'com.koushikdutta.async:androidasync:2.+'
-
-    implementation "org.java-websocket:Java-WebSocket:1.4.0"
-
+    implementation 'org.java-websocket:Java-WebSocket:1.4.0'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-
     //ButterKnife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation files('libs/BaiduLBS_Android.jar')
 }
