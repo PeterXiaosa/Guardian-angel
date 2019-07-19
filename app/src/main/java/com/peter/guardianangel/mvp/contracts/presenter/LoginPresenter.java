@@ -1,9 +1,14 @@
 package com.peter.guardianangel.mvp.contracts.presenter;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.peter.guardianangel.base.BasePresenter;
 import com.peter.guardianangel.bean.User;
+import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.mvp.contracts.model.LoginModel;
 import com.peter.guardianangel.mvp.contracts.view.LoginView;
 import com.peter.guardianangel.retrofit.ApiCallback;
@@ -16,6 +21,8 @@ import okhttp3.RequestBody;
 // Presenter 中保留View的引用, 通过Model去进行数据存储，同时通过Callback进行Model与Presenter的交互
 public class LoginPresenter extends BasePresenter<LoginView> {
 
+    private final String TAG = "LoginPresenter";
+
     public LoginPresenter(@NonNull LoginView view){
         attachView(view);
         initLoginData();
@@ -25,13 +32,16 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
     }
 
-    public void login(User user) {
+    public void login(final User user) {
         addSubscription(api.login(user), new ApiCallback<BaseResponse>() {
 
             @Override
-            public void onSuccess(BaseResponse response) {
+            public void onSuccess(BaseResponse response, JsonObject responseData) {
                 if (response.isSuccess()) {
                     mvpView.loginSuccess();
+                    User userinfo = new Gson().fromJson(responseData.toString(), User.class);
+                    UserData.getInstance().setUser(userinfo);
+                    Log.d(TAG, userinfo.toString());
                 }else {
                     mvpView.loginFail(response.msg);
                 }

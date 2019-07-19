@@ -6,23 +6,86 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#E9E9E9"
     tools:context="com.peter.guardianangel.activity.MatchCodeActivity">
-
-    <Button
-        android:id="@+id/activity_match_code_btn_get_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="获取匹配码"/>
-
     <TextView
-        android:id="@+id/activity_match_code_tv_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="匹配码"/>
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="绑定另一半"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:background="@color/pink"/>
 
-    <Button
-        android:id="@+id/activity_match_code_btn_jump"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="跳转"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp">
+
+            <TextView
+                android:id="@+id/activity_match_code_tv_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text=""
+                android:textColor="#000"
+                android:textSize="19sp"/>
+
+            <TextView
+                android:id="@+id/activity_match_code_tv_code_cn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/activity_match_code_tv_code"
+                android:gravity="center"
+                android:text="配对码: "
+                android:textColor="#000"
+                android:textSize="19sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_input_match_code">
+
+            <EditText
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:text=""
+                android:background="@null"
+                android:inputType="numberSigned                  "
+                android:layout_marginStart="15dp"
+                android:hint="请输入另一匹配码"/>
+
+            <TextView
+                android:id="@+id/fragment_user_tv_setting"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:text="绑定"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:background="@drawable/es_btn_bind"/>
+        </RelativeLayout>
+
+        <!--<Button-->
+            <!--android:id="@+id/activity_match_code_btn_jump"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="跳转"/>-->
+    </LinearLayout>
+
 </LinearLayout>

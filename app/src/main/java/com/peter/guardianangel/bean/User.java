@@ -20,7 +20,7 @@ public class User implements Parcelable {
     private int age;
 
     // 1 is male.
-//    private  boolean sex;
+    private  boolean sex;
 
     public User() {
     }
@@ -104,13 +104,13 @@ public class User implements Parcelable {
         this.age = age;
     }
 
-//    public boolean isSex() {
-//        return sex;
-//    }
+    public boolean isSex() {
+        return sex;
+    }
 
-//    public void setSex(boolean sex) {
-//        this.sex = sex;
-//    }
+    public void setSex(boolean sex) {
+        this.sex = sex;
+    }
 
     @Override
     public int describeContents() {
@@ -127,5 +127,11 @@ public class User implements Parcelable {
         parcel.writeString(this.name);
         parcel.writeInt(this.age);
 //        parcel.writeBooleanArray(new boolean[]{this.sex});
+    }
+
+    @Override
+    public String toString() {
+        return "account : " + account + ", name : " + name +
+                ", age : " + age + ", sex : " + sex + ", deviceid : " + deviceId;
     }
 }

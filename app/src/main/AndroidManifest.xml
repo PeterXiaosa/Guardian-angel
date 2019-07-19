@@ -36,6 +36,20 @@
         <activity
             android:name=".activity.ProtectActivity"
             android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".activity.UserActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".activity.MapActivity" />
+
+        <activity
+            android:name=".activity.MatchCodeActivity"
+            android:theme="@style/MatchCodeStyle"/>
+
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,15 +57,8 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".activity.UserActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.MapActivity" />
-        <activity android:name=".activity.MatchCodeActivity" />
-        <activity android:name=".LoginActivity">
-
-        </activity>
         <activity android:name=".SocketActivity" />
+
         <activity android:name=".MainActivity" />
 
         <service android:name="com.baidu.location.f"

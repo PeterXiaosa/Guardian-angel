@@ -1,5 +1,7 @@
 package com.peter.guardianangel.retrofit;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 
 import io.reactivex.observers.DisposableObserver;
@@ -10,7 +12,7 @@ import io.reactivex.observers.DisposableObserver;
  */
 public abstract class ApiCallback<T> extends DisposableObserver<T> {
 
-    public abstract void onSuccess(T model);
+    public abstract void onSuccess(T response, JsonObject responseData);
 
     public abstract void onFailure(String msg);
 
@@ -38,7 +40,8 @@ public abstract class ApiCallback<T> extends DisposableObserver<T> {
     @Override
     public void onNext(T value) {
         if (value instanceof BaseResponse) {
-            onSuccess(value);
+            JsonObject jsonObject = new JsonParser().parse(((BaseResponse) value).data.toString()).getAsJsonObject();
+            onSuccess(value, jsonObject);
         }else {
             onError(new Throwable("invalid data"));
         }

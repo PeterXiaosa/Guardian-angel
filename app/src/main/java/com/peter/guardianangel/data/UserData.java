@@ -7,6 +7,8 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 
+import com.peter.guardianangel.bean.User;
+
 public class UserData {
     private static final UserData ourInstance = new UserData();
 
@@ -17,6 +19,8 @@ public class UserData {
     private String deviceId;
 
     private Context context;
+
+    private User user;
 
     private UserData() {
     }
@@ -64,5 +68,13 @@ public class UserData {
         }
 
         return szDevIDShort;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

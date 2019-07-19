@@ -70,6 +70,9 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
 
         et_account.setOnFocusChangeListener(this);
         et_password.setOnFocusChangeListener(this);
+
+        et_account.setText("fhc");
+        et_password.setText("111111");
     }
 
     @SuppressLint("CheckResult")
@@ -120,7 +123,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     public void loginSuccess() {
         Toast.makeText(this, "登录成功啦", Toast.LENGTH_SHORT).show();
 //        startActivity(new Intent(LoginActivity.this, MatchCodeActivity.class));
-        startActivity(new Intent(LoginActivity.this, ProtectActivity.class));
+        startActivity(new Intent(LoginActivity.this, MatchCodeActivity.class));
     }
 
     @Override

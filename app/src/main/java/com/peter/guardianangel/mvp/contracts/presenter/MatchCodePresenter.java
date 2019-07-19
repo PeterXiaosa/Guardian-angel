@@ -27,14 +27,12 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
         }
         RequestBody body = RequestBody.create(mediaType, jsonObject.toString());
         addSubscription(api.getMatchCode(body), new ApiCallback<BaseResponse>() {
-
             @Override
-            public void onSuccess(BaseResponse response) {
+            public void onSuccess(BaseResponse response, JsonObject responseData) {
                 if (response.data != null) {
-                    String matchcode = response.data.toString();
+                    String matchcode = String.valueOf(responseData.get("matchcode"));
                     mvpView.updateMatchCode(matchcode);
                 }
-
             }
 
             @Override
