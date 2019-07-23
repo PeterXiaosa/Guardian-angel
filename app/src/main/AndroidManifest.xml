@@ -64,6 +64,10 @@
         <service android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote"/>
+
+        <service android:name=".service.LocationService"
+            android:enabled="true"
+            android:process=":remote"/>
     </application>
 
 </manifest>

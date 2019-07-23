@@ -20,6 +20,7 @@ import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.mvp.MvpActivity;
 import com.peter.guardianangel.mvp.contracts.presenter.LoginPresenter;
 import com.peter.guardianangel.mvp.contracts.view.LoginView;
+import com.peter.guardianangel.service.LocationService;
 import com.peter.guardianangel.util.DeviceIdentifier;
 
 import java.util.ArrayList;
@@ -54,6 +55,8 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
 
         initPermission();
         UserData.getInstance().init(this);
+
+        startService(new Intent(this, LocationService.class));
     }
 
     @Override

@@ -23,6 +23,9 @@ public interface Api {
 
     @POST("/protect/matchcode/generate")
     Observable<BaseResponse> getMatchCode(@Body RequestBody body);
+
+    @POST("/protect/matchcode/auth")
+    Observable<BaseResponse> checkMatchCode(@Body RequestBody body);
     //登录
 //    @POST("user/register")
 //    Observable<RegisterModel> register(@Body UserInfo userInfo);

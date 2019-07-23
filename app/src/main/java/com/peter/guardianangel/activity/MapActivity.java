@@ -105,7 +105,7 @@ public class MapActivity extends BaseActivity {
     public void setPosition2Center(BaiduMap map, BDLocation bdLocation, Boolean isShowLoc) {
         MyLocationData locData = new MyLocationData.Builder()
                 .accuracy(bdLocation.getRadius())
-                .direction(bdLocation.getRadius()).latitude(bdLocation.getLatitude())
+                .direction(bdLocation.getDirection()).latitude(bdLocation.getLatitude())
                 .longitude(bdLocation.getLongitude()).build();
         map.setMyLocationData(locData);
 
@@ -127,8 +127,8 @@ public class MapActivity extends BaseActivity {
 //            MyLocationData locData = new MyLocationData.Builder()
 //                    .accuracy(location.getRadius())
 //                    // 此处设置开发者获取到的方向信息，顺时针0-360
-//                    .direction(location.getDirection()).latitude(location.getLatitude())
-//                    .longitude(location.getLongitude()).build();
+//                    .direction(location.setDirection()).latitude(location.setLatitude())
+//                    .longitude(location.setLongitude()).build();
 //            map.setMyLocationData(locData);
 
             //这个判断是为了防止每次定位都重新设置中心点和marker

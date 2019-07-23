@@ -2,9 +2,13 @@ package com.peter.guardianangel.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.peter.guardianangel.MainActivity;
 import com.peter.guardianangel.R;
 import com.peter.guardianangel.SocketActivity;
 import com.peter.guardianangel.mvp.MvpActivity;
@@ -18,11 +22,17 @@ public class MatchCodeActivity extends MvpActivity<MatchCodePresenter> implement
 
     @BindView(R.id.activity_match_code_tv_code)
     TextView tv_code;
+    @BindView(R.id.activity_match_code_et_matchcode)
+    EditText et_matchcode;
 //    @BindView(R.id.activity_match_code_btn_jump)
 //    Button btn_jump;
 
+    private Handler mHandler;
+
     @Override
     protected void initData() {
+        mHandler = new Handler(getMainLooper());
+
         presenter.getMatchCode();
     }
 
@@ -41,6 +51,11 @@ public class MatchCodeActivity extends MvpActivity<MatchCodePresenter> implement
         return new MatchCodePresenter(this);
     }
 
+    @OnClick(R.id.fragment_user_tv_setting)
+    public void connect(){
+        presenter.checkMatchCode(et_matchcode.getText().toString());
+    }
+
     @Override
     public void showLoading() {
 
@@ -51,15 +66,68 @@ public class MatchCodeActivity extends MvpActivity<MatchCodePresenter> implement
 
     }
 
-//    @OnClick(R.id.activity_match_code_btn_jump)
-//    public void jump () {
-//        Intent intent = new Intent(MatchCodeActivity.this, SocketActivity.class);
-//        intent.putExtra("matchcode", tv_code.getText().toString());
-//        startActivity(intent);
-//    }
-
     @Override
     public void updateMatchCode(String matchCode) {
         tv_code.setText(matchCode);
+    }
+
+    @Override
+    public void connectionOpen() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), "连接建立", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    @Override
+    public void receiveMessage(final String message) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), "收到消息: " + message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    @Override
+    public void connectionClose(final String reason) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), "连接关闭" + reason, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    @Override
+    public void connectionError() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), "连接错误", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    @Override
+    public void errorMatchCode() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), "匹配码不存在", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    @Override
+    public void jumpMainPage() {
+        startActivity(new Intent(MatchCodeActivity.this, ProtectActivity.class));
     }
 }
