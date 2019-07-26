@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URI;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +91,12 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
         });
     }
 
+    public void sendBinary(){
+        byte[] bytes = new byte[]{1,2,1,2,1};
+        mainWebSocketClient.send(bytes);
+//        mainWebSocketClient.send("test123");
+    }
+
     private void longConnectConfig(String matchCode){
         try {
             String realUrl = String.format(urlStr, Api.IP, matchCode, UserData.getInstance().getDeviceId());
@@ -101,6 +108,8 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
                     mvpView.connectionOpen();
                 }
 
+
+
                 @Override
                 public void onMessage(final String message) {
                     Log.d("peterfu", "收到消息");
@@ -110,6 +119,11 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
                         mDatas.add(message);
                         mvpView.receiveMessage(message);
                     }
+                }
+
+                @Override
+                public void onMessage(ByteBuffer bytes) {
+                    super.onMessage(bytes);
                 }
 
                 @Override

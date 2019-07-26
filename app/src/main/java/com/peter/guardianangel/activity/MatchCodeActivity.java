@@ -20,6 +20,8 @@ import butterknife.OnClick;
 
 public class MatchCodeActivity extends MvpActivity<MatchCodePresenter> implements MatchCodeView {
 
+    @BindView(R.id.activity_match_code_tv_title)
+    TextView tv_title;
     @BindView(R.id.activity_match_code_tv_code)
     TextView tv_code;
     @BindView(R.id.activity_match_code_et_matchcode)
@@ -54,6 +56,11 @@ public class MatchCodeActivity extends MvpActivity<MatchCodePresenter> implement
     @OnClick(R.id.fragment_user_tv_setting)
     public void connect(){
         presenter.checkMatchCode(et_matchcode.getText().toString());
+    }
+
+    @OnClick(R.id.activity_match_code_tv_title)
+    public void title(){
+        presenter.sendBinary();
     }
 
     @Override

@@ -9,6 +9,7 @@
     android:background="#E9E9E9"
     tools:context="com.peter.guardianangel.activity.MatchCodeActivity">
     <TextView
+        android:id="@+id/activity_match_code_tv_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
