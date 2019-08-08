@@ -1,10 +1,14 @@
 package com.peter.guardianangel.util;
 
+import android.util.Log;
+
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.map.MyLocationData;
 
 public class LocationListener extends BDAbstractLocationListener {
+
+    private final String TAG = "LocationListener";
 
     public interface Calback{
         void setAccuracy(double accuracy);
@@ -14,6 +18,8 @@ public class LocationListener extends BDAbstractLocationListener {
         void setLatitude(double latitude);
 
         void setLongitude(double longitude);
+
+        void setLocation(double accuracy, double direction, double latitude, double longitude);
     }
 
     private Calback calback;
@@ -42,5 +48,8 @@ public class LocationListener extends BDAbstractLocationListener {
             calback.setDirection(direction);
             calback.setLatitude(latitude);
             calback.setLongitude(longitude);
+
+//            calback.setLocation(accuracy, direction, latitude, longitude);
+        Log.d(TAG, "onReceiveLocation: ");
         }
     }

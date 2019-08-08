@@ -22,6 +22,7 @@ import com.peter.guardianangel.mvp.contracts.presenter.LoginPresenter;
 import com.peter.guardianangel.mvp.contracts.view.LoginView;
 import com.peter.guardianangel.service.LocationService;
 import com.peter.guardianangel.util.DeviceIdentifier;
+import com.peter.guardianangel.util.SerializeUtil;
 
 import java.util.ArrayList;
 import java.util.List;

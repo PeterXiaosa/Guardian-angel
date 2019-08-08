@@ -41,15 +41,19 @@
 
         <activity
             android:name=".activity.UserActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".activity.MapActivity" />
+        <activity android:name=".activity.MapActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".activity.MatchCodeActivity"
-            android:theme="@style/MatchCodeStyle"/>
+            android:theme="@style/MatchCodeStyle"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,17 +61,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SocketActivity" />
+        <activity android:name=".SocketActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote"/>
 
         <service android:name=".service.LocationService"
-            android:enabled="true"
-            android:process=":remote"/>
+            android:enabled="true"/>
+            <!--android:process=":remote"/>-->
     </application>
 
 </manifest>

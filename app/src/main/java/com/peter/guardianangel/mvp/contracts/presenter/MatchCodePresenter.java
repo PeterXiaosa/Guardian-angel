@@ -1,12 +1,11 @@
 package com.peter.guardianangel.mvp.contracts.presenter;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.peter.guardianangel.base.BasePresenter;
 import com.peter.guardianangel.data.UserData;
+import com.peter.guardianangel.data.WebSocketConnect;
 import com.peter.guardianangel.mvp.contracts.view.MatchCodeView;
 import com.peter.guardianangel.retrofit.Api;
 import com.peter.guardianangel.retrofit.ApiCallback;
@@ -36,7 +35,7 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
         attachView(matchCodeView);
     }
 
-    public void getMatchCode(){
+    public void getMatchCode() {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("account", "fhc");
@@ -91,13 +90,7 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
         });
     }
 
-    public void sendBinary(){
-        byte[] bytes = new byte[]{1,2,1,2,1};
-        mainWebSocketClient.send(bytes);
-//        mainWebSocketClient.send("test123");
-    }
-
-    private void longConnectConfig(String matchCode){
+    private void longConnectConfig(String matchCode) {
         try {
             String realUrl = String.format(urlStr, Api.IP, matchCode, UserData.getInstance().getDeviceId());
             URI uri = new URI(realUrl);
@@ -109,13 +102,12 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
                 }
 
 
-
                 @Override
                 public void onMessage(final String message) {
                     Log.d("peterfu", "收到消息");
                     if ("startconnectyourpartner".equals(message)) {
                         mvpView.jumpMainPage();
-                    }else {
+                    } else {
                         mDatas.add(message);
                         mvpView.receiveMessage(message);
                     }
@@ -139,7 +131,8 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
                 }
             };
             mainWebSocketClient.connect();
-        }catch (Exception e){
+            WebSocketConnect.getInstance().setWebSocketClient(mainWebSocketClient);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.peter.guardianangel.MainActivity;
 import com.peter.guardianangel.R;
 import com.peter.guardianangel.SocketActivity;
+import com.peter.guardianangel.data.WebSocketConnect;
 import com.peter.guardianangel.mvp.MvpActivity;
 import com.peter.guardianangel.mvp.contracts.presenter.MatchCodePresenter;
 import com.peter.guardianangel.mvp.contracts.view.MatchCodeView;
@@ -26,8 +27,6 @@ public class MatchCodeActivity extends MvpActivity<MatchCodePresenter> implement
     TextView tv_code;
     @BindView(R.id.activity_match_code_et_matchcode)
     EditText et_matchcode;
-//    @BindView(R.id.activity_match_code_btn_jump)
-//    Button btn_jump;
 
     private Handler mHandler;
 
@@ -53,14 +52,14 @@ public class MatchCodeActivity extends MvpActivity<MatchCodePresenter> implement
         return new MatchCodePresenter(this);
     }
 
-    @OnClick(R.id.fragment_user_tv_setting)
+    @OnClick(R.id.fragment_user_tv_bind)
     public void connect(){
         presenter.checkMatchCode(et_matchcode.getText().toString());
     }
 
     @OnClick(R.id.activity_match_code_tv_title)
     public void title(){
-        presenter.sendBinary();
+//        WebSocketConnect.getInstance().getWebSocketClient().
     }
 
     @Override

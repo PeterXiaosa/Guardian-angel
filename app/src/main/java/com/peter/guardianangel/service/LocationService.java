@@ -8,7 +8,12 @@ import android.util.Log;
 
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.peter.guardianangel.bean.MyLocation;
+import com.peter.guardianangel.data.WebSocketConnect;
 import com.peter.guardianangel.util.LocationListener;
+import com.peter.guardianangel.util.SerializeUtil;
+
+import org.java_websocket.client.WebSocketClient;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,6 +23,8 @@ public class LocationService extends Service implements LocationListener.Calback
     private String TAG = "LocationService";
 
     LocationClient locationClient;
+
+    WebSocketClient webSocketClient;
 
     @Override
     public void onCreate() {
@@ -76,21 +83,50 @@ public class LocationService extends Service implements LocationListener.Calback
 
     @Override
     public void setAccuracy(double accuracy) {
-        Log.d(TAG, "setAccuracy: " + accuracy);
+//        Log.d(TAG, "setAccuracy: " + accuracy);
     }
 
     @Override
     public void setDirection(double direction) {
-        Log.d(TAG, "setDirection: " + direction);
+//        Log.d(TAG, "setDirection: " + direction);
     }
 
     @Override
     public void setLatitude(double latitude) {
-        Log.d(TAG, "setLatitude: " + latitude);
+
+//        Log.d(TAG, "setLatitude: " + latitude);
     }
 
     @Override
     public void setLongitude(double longitude) {
-        Log.d(TAG, "setLongitude: " + longitude);
+
+    }
+
+    @Override
+    public void setLocation(double accuracy, double direction, double latitude, double longitude) {
+        if (webSocketClient == null) {
+            webSocketClient = WebSocketConnect.getInstance().getWebSocketClient();
+            if (webSocketClient != null) {
+                sendLocation(accuracy, direction, latitude, longitude);
+            }
+        }else {
+            sendLocation(accuracy, direction, latitude, longitude);
+        }
+    }
+
+    private void sendLocation(double accuracy, double direction, double latitude, double longitude){
+        try {
+            MyLocation myLocation = MyLocation.class.newInstance();
+            myLocation.setAccuracy(accuracy);
+            myLocation.setDirection(direction);
+            myLocation.setLatitude(latitude);
+            myLocation.setLongitude(longitude);
+            webSocketClient.send(SerializeUtil.serialize(myLocation));
+            Log.d(TAG, "setLatitude: " + latitude + ", setLongitude: " + longitude);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }
