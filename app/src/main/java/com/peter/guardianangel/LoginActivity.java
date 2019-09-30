@@ -56,8 +56,6 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
 
         initPermission();
         UserData.getInstance().init(this);
-
-        startService(new Intent(this, LocationService.class));
     }
 
     @Override
@@ -223,5 +221,11 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
                 underline_password.setBackgroundColor(getResources().getColor(R.color.login_blue, null));
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(new Intent(this, LocationService.class));
     }
 }

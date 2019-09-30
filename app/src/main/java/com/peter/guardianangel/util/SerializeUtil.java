@@ -41,7 +41,7 @@ public class SerializeUtil {
         try {
             // 反序列化
             bais = new ByteArrayInputStream(bytes);
-            ObjectInputStream ois = new ObjectInputStream(bais);
+            CustomObjectInputStream ois = new CustomObjectInputStream(bais);
             return ois.readObject();
         } catch (Exception e) {
             e.printStackTrace();

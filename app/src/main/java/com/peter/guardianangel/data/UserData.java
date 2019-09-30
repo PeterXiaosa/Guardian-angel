@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 
+import com.peter.guardianangel.bean.MyLocation;
 import com.peter.guardianangel.bean.User;
 
 public class UserData {
@@ -21,6 +22,8 @@ public class UserData {
     private Context context;
 
     private User user;
+
+    private MyLocation partnerLocation;
 
     private UserData() {
     }
@@ -76,5 +79,13 @@ public class UserData {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public MyLocation getPartnerLocation() {
+        return partnerLocation;
+    }
+
+    public void setPartnerLocation(MyLocation partnerLocation) {
+        this.partnerLocation = partnerLocation;
     }
 }

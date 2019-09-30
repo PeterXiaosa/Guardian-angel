@@ -4,12 +4,14 @@ import android.util.Log;
 
 import com.google.gson.JsonObject;
 import com.peter.guardianangel.base.BasePresenter;
+import com.peter.guardianangel.bean.MyLocation;
 import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.data.WebSocketConnect;
 import com.peter.guardianangel.mvp.contracts.view.MatchCodeView;
 import com.peter.guardianangel.retrofit.Api;
 import com.peter.guardianangel.retrofit.ApiCallback;
 import com.peter.guardianangel.retrofit.BaseResponse;
+import com.peter.guardianangel.util.SerializeUtil;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -47,6 +49,7 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
             @Override
             public void onSuccess(BaseResponse response, JsonObject responseData) {
                 if (response.data != null) {
+                    Log.d("mymatchcode", "response data: " + response.data.toString());
                     String matchcode = String.valueOf(responseData.get("matchcode"));
                     mvpView.updateMatchCode(matchcode);
                 }
@@ -75,6 +78,7 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
         addSubscription(api.checkMatchCode(body), new ApiCallback<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse response, JsonObject responseData) {
+                WebSocketConnect.getInstance().disConnect();
                 longConnectConfig(matchCode);
             }
 
@@ -94,28 +98,29 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
         try {
             String realUrl = String.format(urlStr, Api.IP, matchCode, UserData.getInstance().getDeviceId());
             URI uri = new URI(realUrl);
-            mainWebSocketClient = new WebSocketClient(uri) {
+
+            WebSocketConnect.getInstance().connect(uri, new WebSocketConnect.SocketCallback() {
                 @Override
-                public void onOpen(ServerHandshake handshakedata) {
+                public void onOpen() {
                     Log.d("peterfu", "连接建立");
                     mvpView.connectionOpen();
                 }
 
-
                 @Override
-                public void onMessage(final String message) {
+                public void onMessage(String message) {
                     Log.d("peterfu", "收到消息");
                     if ("startconnectyourpartner".equals(message)) {
                         mvpView.jumpMainPage();
                     } else {
-                        mDatas.add(message);
                         mvpView.receiveMessage(message);
                     }
                 }
 
                 @Override
                 public void onMessage(ByteBuffer bytes) {
-                    super.onMessage(bytes);
+                    MyLocation location = (MyLocation) SerializeUtil.unserialize(decodeValue(bytes));
+                    UserData.getInstance().setPartnerLocation(location);
+                    Log.d("getlocation", "location : " + location.toString());
                 }
 
                 @Override
@@ -129,11 +134,17 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
                     Log.d("peterfu", "连接错误");
                     mvpView.connectionError();
                 }
-            };
-            mainWebSocketClient.connect();
-            WebSocketConnect.getInstance().setWebSocketClient(mainWebSocketClient);
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public byte[] decodeValue(ByteBuffer bytes) {
+        int len = bytes.limit() - bytes.position();
+        byte[] bytes1 = new byte[len];
+        bytes.get(bytes1);
+        return bytes1;
     }
 }

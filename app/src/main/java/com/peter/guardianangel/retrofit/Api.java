@@ -12,7 +12,7 @@ public interface Api {
     //baseUrl
 //    String BASE_URL = "http://106.15.92.137:8080/app/";
 //    String IP = "192.168.31.174";
-    String IP = "192.168.18.71";
+    String IP = "192.168.18.80";
     String BASE_URL = "http://%s:8080/";
 
     @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头

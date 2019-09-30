@@ -42,6 +42,8 @@ public abstract class ApiCallback<T> extends DisposableObserver<T> {
         if (value instanceof BaseResponse && ((BaseResponse) value).status == 0) {
             JsonObject jsonObject = new JsonParser().parse(((BaseResponse) value).data.toString()).getAsJsonObject();
             onSuccess(value, jsonObject);
+        }else if (value instanceof BaseResponse){
+            onFailure(((BaseResponse) value).msg);
         }else {
             onError(new Throwable("invalid data"));
         }

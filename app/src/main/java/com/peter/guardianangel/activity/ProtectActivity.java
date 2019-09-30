@@ -1,6 +1,7 @@
 package com.peter.guardianangel.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -16,6 +17,7 @@ import com.peter.guardianangel.R;
 import com.peter.guardianangel.fragment.MainFragment;
 import com.peter.guardianangel.fragment.RecordFragment;
 import com.peter.guardianangel.fragment.UserFragment;
+import com.peter.guardianangel.service.LocationService;
 import com.peter.guardianangel.util.FragmentHelper;
 
 import java.util.ArrayList;
@@ -66,6 +68,12 @@ public class ProtectActivity extends AppCompatActivity {
         initFragment();
 
         initPermission();
+
+        startService();
+    }
+
+    private void startService() {
+        startService(new Intent(this, LocationService.class));
     }
 
     private void initFragment() {

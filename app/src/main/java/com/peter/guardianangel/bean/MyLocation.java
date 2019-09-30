@@ -46,4 +46,8 @@ public class MyLocation implements Serializable {
         this.longitude = longitude;
     }
 
+    @Override
+    public String toString() {
+        return new StringBuilder().append("Latitude : ").append(latitude).append(", longitude : ").append(longitude).toString();
+    }
 }
