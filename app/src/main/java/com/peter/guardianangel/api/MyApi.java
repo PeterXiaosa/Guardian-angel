@@ -14,7 +14,7 @@ import java.nio.ByteBuffer;
 
 public class MyApi {
 
-    private static String urlStr = "ws://%s:8080/mywebsocket/%s/%s";
+    private static String urlStr = "ws://%s:8080/JavaWeb_war_exploded/mywebsocket/%s/%s";
 
     private static WebSocketClient mainWebSocketClient;
 

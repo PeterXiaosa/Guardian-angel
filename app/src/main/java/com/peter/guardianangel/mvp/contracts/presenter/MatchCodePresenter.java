@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.JsonObject;
 import com.peter.guardianangel.base.BasePresenter;
 import com.peter.guardianangel.bean.MyLocation;
+import com.peter.guardianangel.data.SocketClient;
 import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.data.WebSocketConnect;
 import com.peter.guardianangel.mvp.contracts.view.MatchCodeView;
@@ -31,7 +32,7 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
 
     List<String> mDatas = new ArrayList<>();
 
-    String urlStr = "ws://%s:8080/mywebsocket/%s/%s";
+    String urlStr = "ws://%s:8080/JavaWeb_war_exploded/mywebsocket/%s/%s";
 
     public MatchCodePresenter(MatchCodeView matchCodeView) {
         attachView(matchCodeView);
@@ -51,6 +52,9 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
                 if (response.data != null) {
                     Log.d("mymatchcode", "response data: " + response.data.toString());
                     String matchcode = String.valueOf(responseData.get("matchcode"));
+                    if (matchcode.contains("\"")) {
+                        matchcode = matchcode.replace("\"", "");
+                    }
                     mvpView.updateMatchCode(matchcode);
                 }
             }
@@ -95,6 +99,9 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
     }
 
     private void longConnectConfig(String matchCode) {
+        SocketClient socketClient = new SocketClient(matchCode);
+        socketClient.connect();
+        UserData.getInstance().setSocketClient(socketClient);
         try {
             String realUrl = String.format(urlStr, Api.IP, matchCode, UserData.getInstance().getDeviceId());
             URI uri = new URI(realUrl);
@@ -102,7 +109,7 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
             WebSocketConnect.getInstance().connect(uri, new WebSocketConnect.SocketCallback() {
                 @Override
                 public void onOpen() {
-                    Log.d("peterfu", "连接建立");
+                    Log.d("peterfu", "连接建立成功");
                     mvpView.connectionOpen();
                 }
 

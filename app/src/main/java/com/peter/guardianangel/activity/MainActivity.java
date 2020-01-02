@@ -1,9 +1,11 @@
-package com.peter.guardianangel;
+package com.peter.guardianangel.activity;
 
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.peter.guardianangel.BaseActivity;
+import com.peter.guardianangel.R;
 import com.peter.guardianangel.annotation.PeterContentViewInject;
 import com.peter.guardianangel.annotation.PeterOnClickInject;
 import com.peter.guardianangel.annotation.PeterViewInject;

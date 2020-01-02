@@ -23,7 +23,11 @@ public class UserData {
 
     private User user;
 
+    private String genkey;
+
     private MyLocation partnerLocation;
+
+    private SocketClient socketClient;
 
     private UserData() {
     }
@@ -79,6 +83,15 @@ public class UserData {
 
     public void setUser(User user) {
         this.user = user;
+        user.setGenkey(genkey);
+    }
+
+    public void setGenkey(String genkey) {
+        this.genkey = genkey;
+    }
+
+    public String getGenkey() {
+        return genkey;
     }
 
     public MyLocation getPartnerLocation() {
@@ -87,5 +100,13 @@ public class UserData {
 
     public void setPartnerLocation(MyLocation partnerLocation) {
         this.partnerLocation = partnerLocation;
+    }
+
+    public SocketClient getSocketClient() {
+        return socketClient;
+    }
+
+    public void setSocketClient(SocketClient socketClient) {
+        this.socketClient = socketClient;
     }
 }

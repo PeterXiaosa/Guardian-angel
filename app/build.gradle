@@ -10,6 +10,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [eventBusIndex: 'com.peter.guardianangel.MyEventBusIndex']
+            }
+        }
     }
 
     signingConfigs {
@@ -67,4 +73,6 @@ dependencies {
     implementation files('libs/BaiduLBS_Android.jar')
 
     implementation 'hessian:hessian:3.0.1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.1.1'
 }

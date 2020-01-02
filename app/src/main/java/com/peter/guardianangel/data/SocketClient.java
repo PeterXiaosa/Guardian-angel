@@ -1,0 +1,71 @@
+package com.peter.guardianangel.data;
+
+import com.peter.guardianangel.retrofit.Api;
+
+import org.greenrobot.eventbus.EventBus;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+/**
+ *  长连接客户端
+ */
+public class SocketClient {
+
+    private static String urlStr = "ws://%s:8080/JavaWeb_war_exploded/mywebsocket/%s/%s";
+
+    private WebSocketClient client;
+
+    private SocketClient() {
+        EventBus.getDefault().register(this);
+    }
+
+    public SocketClient(String matchCode) {
+        String realUrl = String.format(urlStr, Api.IP, matchCode, UserData.getInstance().getDeviceId());
+        URI uri = null;
+        try {
+            uri = new URI(realUrl);
+            client = new WebSocketClient(uri) {
+                @Override
+                public void onOpen(ServerHandshake handshakedata) {
+                    EventBus.getDefault().post(new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_CONNECT_OPEN).buildEvent());
+                }
+
+                @Override
+                public void onMessage(String message) {
+                    EventMessage.Builder builder = new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_CONNECT_OPEN)
+                            .setContent(message);
+                    EventBus.getDefault().post(builder.buildEvent());
+                }
+
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+                    EventBus.getDefault().post(new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_CONNECT_CLOSE).buildEvent());
+                }
+
+                @Override
+                public void onError(Exception ex) {
+                    EventBus.getDefault().post(new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_CONNECT_ERROR).buildEvent());
+                }
+            };
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void connect() {
+        client.connect();
+    }
+
+    public void close(){
+        client.close();
+    }
+
+    public void destroy() {
+        client.close();
+        client = null;
+        EventBus.getDefault().unregister(this);
+    }
+}

@@ -2,11 +2,16 @@ package com.peter.guardianangel;
 
 import android.app.Application;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
+import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.service.LocationService;
+import com.peter.guardianangel.util.CertificateUtil;
 import com.peter.guardianangel.util.DeviceIdentifier;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class MyApplicaion extends Application {
 
@@ -21,6 +26,28 @@ public class MyApplicaion extends Application {
         SDKInitializer.setCoordType(CoordType.BD09LL);
 
 
+//        EventBus.builder().addIndex(new MyEventBusIndex())
+//                .installDefaultEventBus();
+        EventBus.builder().installDefaultEventBus();
+
+        UserData.getInstance().init(this);
+        generateGenKey();
     }
 
+    private void generateGenKey() {
+        //初始化生成genKey
+        SharedPreferences sharedPreferences = getSharedPreferences("genkeyLibrary", MODE_PRIVATE);
+        String genKey = sharedPreferences.getString("genkey", "");
+
+        if (genKey.trim().equals("")) {
+            genKey = CertificateUtil.generaterGenKey();
+            SharedPreferences sp = getSharedPreferences("genkeyLibrary", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("genkey", genKey);
+            editor.apply();
+            UserData.getInstance().setGenkey(genKey);
+        }else {
+            UserData.getInstance().setGenkey(genKey);
+        }
+    }
 }

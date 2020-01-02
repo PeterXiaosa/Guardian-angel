@@ -34,6 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
                 android:text=""
                 android:textColor="#000"
                 android:textSize="19sp"/>
@@ -42,7 +43,7 @@
                 android:id="@+id/activity_match_code_tv_code_cn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/activity_match_code_tv_code"
+                android:layout_toLeftOf="@id/activity_match_code_tv_code"
                 android:gravity="center"
                 android:text="配对码: "
                 android:textColor="#000"

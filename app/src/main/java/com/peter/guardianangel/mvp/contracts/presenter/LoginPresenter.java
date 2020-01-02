@@ -9,14 +9,9 @@ import com.google.gson.JsonParser;
 import com.peter.guardianangel.base.BasePresenter;
 import com.peter.guardianangel.bean.User;
 import com.peter.guardianangel.data.UserData;
-import com.peter.guardianangel.mvp.contracts.model.LoginModel;
 import com.peter.guardianangel.mvp.contracts.view.LoginView;
 import com.peter.guardianangel.retrofit.ApiCallback;
 import com.peter.guardianangel.retrofit.BaseResponse;
-
-import org.json.JSONObject;
-
-import okhttp3.RequestBody;
 
 // Presenter 中保留View的引用, 通过Model去进行数据存储，同时通过Callback进行Model与Presenter的交互
 public class LoginPresenter extends BasePresenter<LoginView> {

@@ -1,4 +1,4 @@
-package com.peter.guardianangel;
+package com.peter.guardianangel.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -12,9 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.peter.guardianangel.activity.MatchCodeActivity;
-import com.peter.guardianangel.activity.ProtectActivity;
-import com.peter.guardianangel.activity.UserActivity;
+import com.peter.guardianangel.R;
 import com.peter.guardianangel.bean.User;
 import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.mvp.MvpActivity;
@@ -22,7 +20,6 @@ import com.peter.guardianangel.mvp.contracts.presenter.LoginPresenter;
 import com.peter.guardianangel.mvp.contracts.view.LoginView;
 import com.peter.guardianangel.service.LocationService;
 import com.peter.guardianangel.util.DeviceIdentifier;
-import com.peter.guardianangel.util.SerializeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +41,8 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     View underline_account;
     @BindView(R.id.activity_login_view_underline_password)
     View underline_password;
+    @BindView(R.id.activity_login_btn_register)
+    TextView btn_register;
 
     @Override
     protected int getLayoutId() {
@@ -85,7 +84,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         final User user = new User();
         user.setAccount(account);
         user.setPassword(password);
-        user.setGenkey("testgenkey");
+        user.setGenkey(UserData.getInstance().getGenkey());
         user.setDeviceId(UserData.getInstance().getDeviceId());
 
         try {
@@ -120,6 +119,10 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         }
     }
 
+    @OnClick(R.id.activity_login_btn_register)
+    public void register() {
+        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+    }
 
     @Override
     public void loginSuccess() {

@@ -1,4 +1,4 @@
-package com.peter.guardianangel;
+package com.peter.guardianangel.activity;
 
 import android.Manifest;
 import android.content.Context;
@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.peter.guardianangel.R;
 import com.peter.guardianangel.adapter.MessageAdapter;
 import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.retrofit.Api;

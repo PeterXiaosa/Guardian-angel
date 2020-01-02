@@ -11,7 +11,8 @@
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -28,6 +29,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activity.RegisterActivity"></activity>
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -35,25 +37,18 @@
 
         <activity
             android:name=".activity.ProtectActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.UserActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".activity.MapActivity"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.MapActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MatchCodeActivity"
-            android:theme="@style/MatchCodeStyle"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".LoginActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/MatchCodeStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,19 +56,29 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SocketActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".activity.SocketActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait" />
 
-        <service android:name="com.baidu.location.f"
+        <service
+            android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"/>
-
-        <service android:name=".service.LocationService"
-            android:enabled="true"/>
-            <!--android:process=":remote"/>-->
+            android:process=":remote" />
+        <service
+            android:name=".service.LocationService"
+            android:enabled="true" />
     </application>
 
 </manifest>

@@ -30,7 +30,7 @@ public abstract class ApiCallback<T> extends DisposableObserver<T> {
             }else if (errorCode == 502 || errorCode == 404){
                 msg = "服务器异常，请稍后再试";
             }
-            onFailure(msg);
+            onFailure(msg + errorCode);
         }else {
             onFailure(e.getMessage());
         }

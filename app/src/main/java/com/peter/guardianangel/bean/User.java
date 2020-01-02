@@ -13,7 +13,7 @@ public class User implements Parcelable {
 
     private String deviceId;
 
-    private String matchCode;
+    private String matchcode;
 
     private String name;
 
@@ -30,7 +30,7 @@ public class User implements Parcelable {
         password = in.readString();
         genkey = in.readString();
         deviceId = in.readString();
-        matchCode = in.readString();
+        matchcode = in.readString();
         name = in.readString();
         age = in.readInt();
 //        sex = in.readByte() != 0;
@@ -80,12 +80,12 @@ public class User implements Parcelable {
         this.deviceId = deviceId;
     }
 
-    public String getMatchCode() {
-        return matchCode;
+    public String getMatchcode() {
+        return matchcode;
     }
 
-    public void setMatchCode(String matchCode) {
-        this.matchCode = matchCode;
+    public void setMatchcode(String matchcode) {
+        this.matchcode = matchcode;
     }
 
     public String getName() {
@@ -123,7 +123,7 @@ public class User implements Parcelable {
         parcel.writeString(this.password);
         parcel.writeString(this.genkey);
         parcel.writeString(this.deviceId);
-        parcel.writeString(this.matchCode);
+        parcel.writeString(this.matchcode);
         parcel.writeString(this.name);
         parcel.writeInt(this.age);
 //        parcel.writeBooleanArray(new boolean[]{this.sex});

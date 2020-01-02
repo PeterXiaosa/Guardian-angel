@@ -1,17 +1,12 @@
 package com.peter.guardianangel.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.peter.guardianangel.MainActivity;
 import com.peter.guardianangel.R;
-import com.peter.guardianangel.SocketActivity;
-import com.peter.guardianangel.data.WebSocketConnect;
 import com.peter.guardianangel.mvp.MvpActivity;
 import com.peter.guardianangel.mvp.contracts.presenter.MatchCodePresenter;
 import com.peter.guardianangel.mvp.contracts.view.MatchCodeView;
