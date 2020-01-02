@@ -1,4 +1,4 @@
-package com.peter.guardianangel.view;
+package com.peter.guardianangel.view.daypicker;
 
 import android.app.Dialog;
 import android.content.Context;

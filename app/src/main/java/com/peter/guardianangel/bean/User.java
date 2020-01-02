@@ -17,13 +17,14 @@ public class User implements Parcelable {
 
     private String name;
 
-    private int age;
+    private String birthday;
 
     // 1 is male.
     private  boolean sex;
 
     public User() {
     }
+
 
     protected User(Parcel in) {
         account = in.readString();
@@ -32,8 +33,8 @@ public class User implements Parcelable {
         deviceId = in.readString();
         matchcode = in.readString();
         name = in.readString();
-        age = in.readInt();
-//        sex = in.readByte() != 0;
+        birthday = in.readString();
+        sex = in.readByte() != 0;
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -96,14 +97,6 @@ public class User implements Parcelable {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public boolean isSex() {
         return sex;
     }
@@ -112,26 +105,34 @@ public class User implements Parcelable {
         this.sex = sex;
     }
 
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    @Override
+    public String toString() {
+        return "account : " + account + ", name : " + name +
+                ", birthday : " + birthday + ", sex : " + sex + ", deviceid : " + deviceId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(this.account);
-        parcel.writeString(this.password);
-        parcel.writeString(this.genkey);
-        parcel.writeString(this.deviceId);
-        parcel.writeString(this.matchcode);
-        parcel.writeString(this.name);
-        parcel.writeInt(this.age);
-//        parcel.writeBooleanArray(new boolean[]{this.sex});
-    }
-
-    @Override
-    public String toString() {
-        return "account : " + account + ", name : " + name +
-                ", age : " + age + ", sex : " + sex + ", deviceid : " + deviceId;
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(account);
+        dest.writeString(password);
+        dest.writeString(genkey);
+        dest.writeString(deviceId);
+        dest.writeString(matchcode);
+        dest.writeString(name);
+        dest.writeString(birthday);
+        dest.writeByte((byte) (sex ? 1 : 0));
     }
 }

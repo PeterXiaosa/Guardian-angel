@@ -1,19 +1,20 @@
 package com.peter.guardianangel.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.peter.guardianangel.R;
+import com.peter.guardianangel.bean.User;
+import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.mvp.MvpActivity;
 import com.peter.guardianangel.mvp.contracts.presenter.UserInfoEditPresenter;
 import com.peter.guardianangel.mvp.contracts.view.UserInfoEditView;
 import com.peter.guardianangel.util.CalendarUtil;
 import com.peter.guardianangel.util.ToastHelper;
-import com.peter.guardianangel.view.DateSelectKeyboardDialog;
+import com.peter.guardianangel.view.daypicker.DateSelectKeyboardDialog;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,6 +38,8 @@ public class UserInfoEditActivity extends MvpActivity<UserInfoEditPresenter> imp
     RadioButton rb_female;
     @BindView(R.id.activity_user_info_edit_rb_male)
     RadioButton rb_male;
+    @BindView(R.id.activity_user_info_edit_et_name)
+    EditText et_name;
 
 
     final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -73,6 +76,11 @@ public class UserInfoEditActivity extends MvpActivity<UserInfoEditPresenter> imp
         if (buttonid == R.id.activity_user_info_edit_rb_female) {
             ismale = false;
         }
+        User user = UserData.getInstance().getUser();
+        user.setBirthday(tv_birthday.getText().toString());
+        user.setName(et_name.getText().toString());
+        user.setSex(ismale);
+        presenter.updateUserInfo(user);
     }
 
     @OnClick(R.id.activity_user_info_edit_tv_birthday_value)
@@ -113,5 +121,16 @@ public class UserInfoEditActivity extends MvpActivity<UserInfoEditPresenter> imp
 
         //  || formerDate.getTime()-laterDate.getTime() ==0
         return formerDate.getTime()-laterDate.getTime() < 0 || formerDate.getTime()-laterDate.getTime() == 0;
+    }
+
+    @Override
+    public void updateUserInfoSuccessfully() {
+        ToastHelper.show(this, "用户信息更新成功");
+        finish();
+    }
+
+    @Override
+    public void updateUserInfofail() {
+        ToastHelper.show(this, "用户信息更新失败");
     }
 }

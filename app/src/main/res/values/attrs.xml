@@ -16,4 +16,15 @@
         <!-- 选中数字的描述文字（数字右边）-->
         <attr name="selectedNumberTitle" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="CustomRatingBar">
+        <attr name="numStars" format="integer" /><!--总的星星数-->
+        <attr name="rating" format="float" /><!--当前已选中的星星个数-->
+        <attr name="ratingViewClass" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CouponView">
+        <attr name="radius" format="dimension"/>
+        <attr name="spacing" format="dimension"/>
+    </declare-styleable>
 </resources>

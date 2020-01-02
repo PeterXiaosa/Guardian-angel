@@ -53,11 +53,6 @@ public class MatchCodeActivity extends MvpActivity<MatchCodePresenter> implement
         presenter.checkMatchCode(et_matchcode.getText().toString());
     }
 
-    @OnClick(R.id.activity_match_code_tv_title)
-    public void title(){
-//        WebSocketConnect.getInstance().getWebSocketClient().
-    }
-
     @Override
     public void showLoading() {
 
