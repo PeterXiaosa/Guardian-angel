@@ -52,7 +52,7 @@ public class FragmentHelper {
         FragmentHelper.setFragmentManager(activity.getSupportFragmentManager());
         FragmentHelper.initFragmentTransaction();
 
-        lastShowFragment = 0;
+        lastShowFragment = 2;
         fragmentTransaction.add(R.id.activity_protect_fl_container, fragment)
                 .show(fragment)
                 .commit();

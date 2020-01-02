@@ -109,7 +109,7 @@
             </RelativeLayout>
 
         </RelativeLayout>
-q
+
         <TextView
             android:id="@+id/activity_register_btn_register"
             android:layout_width="328dp"

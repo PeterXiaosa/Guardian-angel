@@ -27,7 +27,7 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
         user.setPassword(password);
         user.setGenkey(UserData.getInstance().getGenkey());
         user.setDeviceId(UserData.getInstance().getDeviceId());
-        user.setMatchcode("123");
+//        user.setMatchcode("123");
 
         addSubscription(api.register(user), new ApiCallback<BaseResponse>() {
             @Override

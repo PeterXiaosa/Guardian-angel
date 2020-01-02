@@ -127,8 +127,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     @Override
     public void loginSuccess() {
         Toast.makeText(this, "登录成功啦", Toast.LENGTH_SHORT).show();
-//        startActivity(new Intent(LoginActivity.this, MatchCodeActivity.class));
-        startActivity(new Intent(LoginActivity.this, MatchCodeActivity.class));
+        startActivity(new Intent(LoginActivity.this, ProtectActivity.class));
     }
 
     @Override

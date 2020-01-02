@@ -30,6 +30,7 @@ public class MatchCodeActivity extends MvpActivity<MatchCodePresenter> implement
         mHandler = new Handler(getMainLooper());
 
         presenter.getMatchCode();
+        presenter.register();
     }
 
     @Override
@@ -130,5 +131,11 @@ public class MatchCodeActivity extends MvpActivity<MatchCodePresenter> implement
     @Override
     public void jumpMainPage() {
         startActivity(new Intent(MatchCodeActivity.this, ProtectActivity.class));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.unRegister();
     }
 }

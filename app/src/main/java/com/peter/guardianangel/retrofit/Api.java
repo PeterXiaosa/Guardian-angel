@@ -12,7 +12,7 @@ public interface Api {
     //baseUrl
 //    String BASE_URL = "http://106.15.92.137:8080/app/";
 //    String IP = "192.168.31.174";
-    String IP = "192.168.18.155";
+    String IP = "192.168.18.157";
     String BASE_URL = "http://%s:8080/JavaWeb_war_exploded/";
 
     @Headers({"Content-Type: application/json","Accept: application/json"})//需要添加头
@@ -29,6 +29,10 @@ public interface Api {
     // 注册
     @POST("user/register")
     Observable<BaseResponse> register(@Body User user);
+
+    //登录
+    @POST("certificate/modifyuserinfo")
+    Observable<BaseResponse> updateUserInfo(@Body User userInfo);
 
     //TODO RequestBody传入服务器的参数不对，服务器无法接受到Json格式，不想创建JavaBean的前提下需要使用RequetBody。
     //TODO 使用@FieldMap需要传入HashMap，同时需要添加注解@FormUrlEncoded。

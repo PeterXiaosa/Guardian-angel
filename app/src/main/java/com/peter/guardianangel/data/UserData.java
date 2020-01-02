@@ -27,7 +27,7 @@ public class UserData {
 
     private MyLocation partnerLocation;
 
-    private SocketClient socketClient;
+    private SocketClient socketClient = null;
 
     private UserData() {
     }

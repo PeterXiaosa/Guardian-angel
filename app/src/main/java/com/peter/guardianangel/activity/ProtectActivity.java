@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.peter.guardianangel.R;
+import com.peter.guardianangel.data.SocketClient;
+import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.fragment.MainFragment;
 import com.peter.guardianangel.fragment.RecordFragment;
 import com.peter.guardianangel.fragment.UserFragment;
@@ -26,7 +28,9 @@ import java.util.List;
 public class ProtectActivity extends AppCompatActivity {
     private TextView mTextMessage;
     private Fragment fragment1, fragment2, fragment3;
-    private int lastShowFragment = 1;
+    private int lastShowFragment = 3;
+
+    BottomNavigationView navView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -35,15 +39,23 @@ public class ProtectActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    if (lastShowFragment != 1) {
-                        FragmentHelper.switchFragment(fragment1, ProtectActivity.this);
-                        lastShowFragment = 1;
+                    if (isJumpActivity()) {
+                        startActivity(new Intent(ProtectActivity.this, MatchCodeActivity.class));
+                    } else {
+                        if (lastShowFragment != 1) {
+                            FragmentHelper.switchFragment(fragment1, ProtectActivity.this);
+                            lastShowFragment = 1;
+                        }
                     }
                     return true;
                 case R.id.navigation_dashboard:
-                    if (lastShowFragment != 2) {
-                        FragmentHelper.switchFragment(fragment2, ProtectActivity.this);
-                        lastShowFragment = 2;
+                    if (isJumpActivity()) {
+                        startActivity(new Intent(ProtectActivity.this, MatchCodeActivity.class));
+                    } else {
+                        if (lastShowFragment != 2) {
+                            FragmentHelper.switchFragment(fragment2, ProtectActivity.this);
+                            lastShowFragment = 2;
+                        }
                     }
                     return true;
                 case R.id.navigation_notifications:
@@ -57,11 +69,22 @@ public class ProtectActivity extends AppCompatActivity {
         }
     };
 
+    private boolean isJumpActivity(){
+        SocketClient socketClient = UserData.getInstance().getSocketClient();
+        if (socketClient == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_protect);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView = findViewById(R.id.nav_view);
+
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -80,8 +103,8 @@ public class ProtectActivity extends AppCompatActivity {
         fragment1 = new MainFragment();
         fragment2 = new RecordFragment();
         fragment3 = new UserFragment();
-        lastShowFragment = 1;
-        FragmentHelper.initFragment(fragment1, this);
+        lastShowFragment = 3;
+        FragmentHelper.initFragment(fragment3, this);
     }
 
     private void initPermission() {
@@ -103,5 +126,13 @@ public class ProtectActivity extends AppCompatActivity {
         if (!permissionList.isEmpty()) {
             ActivityCompat.requestPermissions(this, permissionList.toArray(new String[permissionList.size()]), 1);
         } else {}
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isJumpActivity()) {
+            navView.setSelectedItemId(R.id.navigation_notifications);
+        }
     }
 }

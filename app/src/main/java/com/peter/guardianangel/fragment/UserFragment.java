@@ -1,5 +1,6 @@
 package com.peter.guardianangel.fragment;
 
+import android.content.Intent;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.peter.guardianangel.R;
+import com.peter.guardianangel.activity.UserInfoEditActivity;
 import com.peter.guardianangel.bean.MyLocation;
 import com.peter.guardianangel.data.UserData;
 
@@ -25,6 +28,8 @@ public class UserFragment extends Fragment {
     TextView tv_location;
 
     GeoCoder mCoder;
+
+    RelativeLayout rl_account;
 
     @Nullable
     @Override
@@ -69,6 +74,14 @@ public class UserFragment extends Fragment {
             public void onClick(View view) {
                 MyLocation myLocation = UserData.getInstance().getPartnerLocation();
                 getAddress(myLocation);
+            }
+        });
+
+        rl_account = root.findViewById(R.id.fragment_user_rl_account);
+        rl_account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), UserInfoEditActivity.class));
             }
         });
     }

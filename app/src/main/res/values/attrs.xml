@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomNumberPicker">
+        <attr name="textColorSelected" format="color"/>
+        <attr name="textColorGrey" format="color"/>
+        <attr name="textColorGreyShader" format="color"/>
+        <attr name="bgColorSelected" format="color"/>
+        <attr name="textSize" format="dimension"/>
+        <!-- 数字最小值最大值-->
+        <attr name="MaxValue" format="integer"/>
+        <attr name="MinValue" format="integer"/>
+        <!-- 一页的长度-->
+        <attr name="pageSize" format="integer"/>
+        <!-- 数字左边距-->
+        <attr name="numberPaddingStart" format="dimension"/>
+        <!-- 选中数字的描述文字（数字右边）-->
+        <attr name="selectedNumberTitle" format="string"/>
+    </declare-styleable>
+</resources>

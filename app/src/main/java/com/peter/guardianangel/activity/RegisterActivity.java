@@ -42,6 +42,7 @@ public class RegisterActivity extends MvpActivity<RegisterPresenter> implements 
     @Override
     public void registerSuccess() {
         Toast.makeText(this, "注册成功",Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override

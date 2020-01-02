@@ -33,10 +33,10 @@ public class LoginPresenter extends BasePresenter<LoginView> {
             @Override
             public void onSuccess(BaseResponse response, JsonObject responseData) {
                 if (response.isSuccess()) {
-                    mvpView.loginSuccess();
                     User userinfo = new Gson().fromJson(responseData.toString(), User.class);
                     UserData.getInstance().setUser(userinfo);
                     Log.d(TAG, userinfo.toString());
+                    mvpView.loginSuccess();
                 }else {
                     mvpView.loginFail(response.msg);
                 }

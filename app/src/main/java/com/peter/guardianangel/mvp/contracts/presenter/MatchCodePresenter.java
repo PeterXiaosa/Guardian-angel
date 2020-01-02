@@ -5,21 +5,23 @@ import android.util.Log;
 import com.google.gson.JsonObject;
 import com.peter.guardianangel.base.BasePresenter;
 import com.peter.guardianangel.bean.MyLocation;
+import com.peter.guardianangel.data.EventMessage;
+import com.peter.guardianangel.data.ServiceConstant;
 import com.peter.guardianangel.data.SocketClient;
 import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.data.WebSocketConnect;
 import com.peter.guardianangel.mvp.contracts.view.MatchCodeView;
-import com.peter.guardianangel.retrofit.Api;
 import com.peter.guardianangel.retrofit.ApiCallback;
 import com.peter.guardianangel.retrofit.BaseResponse;
 import com.peter.guardianangel.util.SerializeUtil;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URI;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,15 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
     public MatchCodePresenter(MatchCodeView matchCodeView) {
         attachView(matchCodeView);
     }
+
+    public void register(){
+        EventBus.getDefault().register(this);
+    }
+
+    public void unRegister() {
+        EventBus.getDefault().unregister(this);
+    }
+
 
     public void getMatchCode() {
         JSONObject jsonObject = new JSONObject();
@@ -101,57 +112,69 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
     private void longConnectConfig(String matchCode) {
         SocketClient socketClient = new SocketClient(matchCode);
         socketClient.connect();
-        UserData.getInstance().setSocketClient(socketClient);
-        try {
-            String realUrl = String.format(urlStr, Api.IP, matchCode, UserData.getInstance().getDeviceId());
-            URI uri = new URI(realUrl);
-
-            WebSocketConnect.getInstance().connect(uri, new WebSocketConnect.SocketCallback() {
-                @Override
-                public void onOpen() {
-                    Log.d("peterfu", "连接建立成功");
-                    mvpView.connectionOpen();
-                }
-
-                @Override
-                public void onMessage(String message) {
-                    Log.d("peterfu", "收到消息");
-                    if ("startconnectyourpartner".equals(message)) {
-                        mvpView.jumpMainPage();
-                    } else {
-                        mvpView.receiveMessage(message);
-                    }
-                }
-
-                @Override
-                public void onMessage(ByteBuffer bytes) {
-                    MyLocation location = (MyLocation) SerializeUtil.unserialize(decodeValue(bytes));
-                    UserData.getInstance().setPartnerLocation(location);
-                    Log.d("getlocation", "location : " + location.toString());
-                }
-
-                @Override
-                public void onClose(int code, String reason, boolean remote) {
-                    Log.d("peterfu", "连接关闭");
-                    mvpView.connectionClose(reason);
-                }
-
-                @Override
-                public void onError(Exception ex) {
-                    Log.d("peterfu", "连接错误");
-                    mvpView.connectionError();
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
-    public byte[] decodeValue(ByteBuffer bytes) {
+    private byte[] decodeValue(ByteBuffer bytes) {
         int len = bytes.limit() - bytes.position();
         byte[] bytes1 = new byte[len];
         bytes.get(bytes1);
         return bytes1;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(EventMessage messageEvent) {
+        int action = messageEvent.getAction();
+        Object data = messageEvent.getData();
+        String content = messageEvent.getContent();
+        switch (action) {
+            case ServiceConstant.SERVICE_TYPE_CONNECT_OPEN:
+                connectOpen();
+                break;
+            case ServiceConstant.SERVICE_TYPE_MATCH_SUCCESS:
+                connectSuccess();
+                break;
+            case ServiceConstant.SERVICE_TYPE_MESSAGE_STRING:
+                receiveMessage(content);
+                break;
+            case ServiceConstant.SERVICE_TYPE_MESSAGE_BYTE:
+                receiveMessage((ByteBuffer) data);
+                break;
+            case ServiceConstant.SERVICE_TYPE_CONNECT_CLOSE:
+                connectClose(content);
+                break;
+            case ServiceConstant.SERVICE_TYPE_CONNECT_ERROR:
+                connectError();
+                break;
+        }
+
+    }
+
+    private void connectSuccess() {
+        mvpView.jumpMainPage();
+    }
+
+    private void connectError() {
+        Log.d("peterfu", "连接错误");
+        mvpView.connectionError();
+    }
+
+    private void connectClose(String content) {
+        Log.d("peterfu", "连接关闭");
+        mvpView.connectionClose(content);
+    }
+
+    private void receiveMessage(String message) {
+        mvpView.receiveMessage(message);
+    }
+
+    private void receiveMessage(ByteBuffer bytes) {
+        MyLocation location = (MyLocation) SerializeUtil.unserialize(decodeValue(bytes));
+        UserData.getInstance().setPartnerLocation(location);
+        Log.d("getlocation", "location : " + location.toString());
+    }
+
+    private void connectOpen() {
+        Log.d("peterfu", "连接建立成功");
+        mvpView.connectionOpen();
     }
 }

@@ -66,4 +66,10 @@
     <color name="progressColor">#CC0033</color>
     <color name="progressColorBlue">#3366FF</color>
     <color name="progressColorGreen">#66FF33</color>
+
+    <color name="keyboardTextColorNormal">#3c3c3c</color>
+    <color name="keyboardSeparator">#afafaf</color>
+    <color name="custom_number_picker_selected_default_bg">#ededed</color>
+    <color name="custom_number_picker_shader_color">#00afafaf</color>
+    <color name="quote_keyboardBgColorNumberPressed">#B6222F</color>
 </resources>

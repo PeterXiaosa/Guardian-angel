@@ -8,6 +8,7 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.ByteBuffer;
 
 /**
  *  长连接客户端
@@ -35,14 +36,29 @@ public class SocketClient {
 
                 @Override
                 public void onMessage(String message) {
-                    EventMessage.Builder builder = new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_CONNECT_OPEN)
-                            .setContent(message);
+                    if ("startconnectyourpartner".equals(message)) {
+                        EventMessage.Builder builder = new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_MATCH_SUCCESS);
+                        EventBus.getDefault().post(builder.buildEvent());
+                        UserData.getInstance().setSocketClient(SocketClient.this);
+                    } else {
+                        EventMessage.Builder builder = new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_CONNECT_OPEN)
+                                .setContent(message);
+                        EventBus.getDefault().post(builder.buildEvent());
+                    }
+                }
+
+                @Override
+                public void onMessage(ByteBuffer bytes) {
+                    EventMessage.Builder builder = new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_MESSAGE_BYTE)
+                            .setData(bytes);
                     EventBus.getDefault().post(builder.buildEvent());
                 }
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
-                    EventBus.getDefault().post(new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_CONNECT_CLOSE).buildEvent());
+                    EventMessage.Builder builder = new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_CONNECT_CLOSE)
+                            .setContent(reason);
+                    EventBus.getDefault().post(builder.buildEvent());
                 }
 
                 @Override

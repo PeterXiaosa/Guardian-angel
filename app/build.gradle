@@ -75,4 +75,6 @@ dependencies {
     implementation 'hessian:hessian:3.0.1'
     implementation 'org.greenrobot:eventbus:3.1.1'
     annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.1.1'
+
+    implementation 'com.alibaba:fastjson:1.1.71.android'
 }

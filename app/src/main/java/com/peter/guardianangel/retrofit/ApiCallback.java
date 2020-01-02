@@ -39,8 +39,12 @@ public abstract class ApiCallback<T> extends DisposableObserver<T> {
 
     @Override
     public void onNext(T value) {
-        if (value instanceof BaseResponse && ((BaseResponse) value).status == 0) {
-            JsonObject jsonObject = new JsonParser().parse(((BaseResponse) value).data.toString()).getAsJsonObject();
+        if (value instanceof BaseResponse && ((BaseResponse) value).isSuccess()) {
+            String valueStr = ((BaseResponse) value).data.toString();
+            JsonObject jsonObject = new JsonObject();
+            if (!valueStr.isEmpty()) {
+                jsonObject = new JsonParser().parse(valueStr).getAsJsonObject();
+            }
             onSuccess(value, jsonObject);
         }else if (value instanceof BaseResponse){
             onFailure(((BaseResponse) value).msg);
