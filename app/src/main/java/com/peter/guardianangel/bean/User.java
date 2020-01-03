@@ -97,7 +97,7 @@ public class User implements Parcelable {
         this.name = name;
     }
 
-    public boolean isSex() {
+    public boolean getSex() {
         return sex;
     }
 

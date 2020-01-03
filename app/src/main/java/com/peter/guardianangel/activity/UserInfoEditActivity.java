@@ -1,5 +1,6 @@
 package com.peter.guardianangel.activity;
 
+import android.annotation.SuppressLint;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -23,6 +24,11 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 public class UserInfoEditActivity extends MvpActivity<UserInfoEditPresenter> implements UserInfoEditView {
 
@@ -69,6 +75,7 @@ public class UserInfoEditActivity extends MvpActivity<UserInfoEditPresenter> imp
         finish();
     }
 
+    @SuppressLint("CheckResult")
     @OnClick(R.id.activity_userinfo_edit_tv_save)
     public void save() {
         boolean ismale = true;
@@ -76,11 +83,39 @@ public class UserInfoEditActivity extends MvpActivity<UserInfoEditPresenter> imp
         if (buttonid == R.id.activity_user_info_edit_rb_female) {
             ismale = false;
         }
-        User user = UserData.getInstance().getUser();
+        final User user = UserData.getInstance().getUser();
         user.setBirthday(tv_birthday.getText().toString());
         user.setName(et_name.getText().toString());
         user.setSex(ismale);
-        presenter.updateUserInfo(user);
+        
+        Observable.create(new ObservableOnSubscribe<User>() {
+            @Override
+            public void subscribe(ObservableEmitter<User> e) throws Exception {
+                e.onNext(user);
+            }
+        }).map(new Function<User, Boolean>()
+        {
+            @Override
+            public Boolean apply(User user) throws Exception {
+                if (user.getName() == null || user.getName().isEmpty()) {
+                    return false;
+                }
+                if (user.getBirthday() == null || user.getName().isEmpty()) {
+                    return false;
+                }
+                return true;
+            }
+        }).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                if (aBoolean) {
+                    presenter.updateUserInfo(user);
+                } else {
+                    ToastHelper.show(getApplicationContext(), "请填写完善信息");
+                }
+            }
+        });
+
     }
 
     @OnClick(R.id.activity_user_info_edit_tv_birthday_value)

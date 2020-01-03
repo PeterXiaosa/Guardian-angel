@@ -29,7 +29,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.UserInfoEditActivity"></activity>
+        <service
+            android:name=".service.RefreshTokenService"
+            android:exported="false"></service>
+
+        <activity
+            android:name=".activity.UserInfoEditActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".activity.RegisterActivity" />
 
         <meta-data
@@ -39,25 +45,7 @@
         <activity
             android:name=".activity.ProtectActivity"
             android:screenOrientation="portrait">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
-
-        <activity
-            android:name=".activity.UserActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.MapActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".activity.MatchCodeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MatchCodeStyle">
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
 
@@ -65,18 +53,34 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+        <activity
+            android:name=".activity.UserActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.MapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MatchCodeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MatchCodeStyle">
 
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.SocketActivity"
             android:screenOrientation="portrait" />

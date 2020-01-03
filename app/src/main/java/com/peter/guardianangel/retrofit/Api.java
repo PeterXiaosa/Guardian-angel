@@ -30,9 +30,13 @@ public interface Api {
     @POST("user/register")
     Observable<BaseResponse> register(@Body User user);
 
-    //登录
+    // 更新用户信息
     @POST("certificate/modifyuserinfo")
     Observable<BaseResponse> updateUserInfo(@Body User userInfo);
+
+    // 查询用户信息
+    @POST("certificate/queryuserinfo")
+    Observable<BaseResponse> queryUserInfo(@Body User userInfo);
 
     //TODO RequestBody传入服务器的参数不对，服务器无法接受到Json格式，不想创建JavaBean的前提下需要使用RequetBody。
     //TODO 使用@FieldMap需要传入HashMap，同时需要添加注解@FormUrlEncoded。
