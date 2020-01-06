@@ -29,7 +29,7 @@
             android:textSize="18sp"/>
 
         <TextView
-            android:id="@+id/activity_user_tv_save"
+            android:id="@+id/activity_user_tv_edit"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="编辑"
@@ -44,7 +44,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fragment_user_tv_setting"
+        android:layout_below="@id/fragment_user_tv_setting"
         android:orientation="vertical"
         android:background="@drawable/bg_layout">
         <RelativeLayout

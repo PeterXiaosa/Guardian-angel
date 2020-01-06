@@ -2,6 +2,7 @@ package com.peter.guardianangel.mvp.contracts.presenter;
 
 import android.support.annotation.NonNull;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
 import com.peter.guardianangel.base.BasePresenter;
 import com.peter.guardianangel.bean.User;
@@ -18,7 +19,7 @@ public class UserInfoEditPresenter extends BasePresenter <UserInfoEditView> {
         addSubscription(api.updateUserInfo(user), new ApiCallback<BaseResponse>() {
 
             @Override
-            public void onSuccess(BaseResponse response, JsonObject responseData) {
+            public void onSuccess(BaseResponse response, JSONObject responseData) {
                 if (response.isSuccess()) {
                     mvpView.updateUserInfoSuccessfully();
                 } else {

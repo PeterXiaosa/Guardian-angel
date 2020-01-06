@@ -1,5 +1,6 @@
 package com.peter.guardianangel.retrofit;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
@@ -12,7 +13,7 @@ import io.reactivex.observers.DisposableObserver;
  */
 public abstract class ApiCallback<T> extends DisposableObserver<T> {
 
-    public abstract void onSuccess(T response, JsonObject responseData);
+    public abstract void onSuccess(T response, JSONObject responseData);
 
     public abstract void onFailure(String msg);
 
@@ -41,11 +42,14 @@ public abstract class ApiCallback<T> extends DisposableObserver<T> {
     public void onNext(T value) {
         if (value instanceof BaseResponse && ((BaseResponse) value).isSuccess()) {
             String valueStr = ((BaseResponse) value).data.toString();
-            JsonObject jsonObject = new JsonObject();
+//            JsonObject jsonObject = new JsonObject();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("msg", ((BaseResponse) value).msg);
+            jsonObject.put("status", ((BaseResponse) value).status);
             if (!valueStr.isEmpty()) {
-                jsonObject = new JsonParser().parse(valueStr).getAsJsonObject();
+                jsonObject.put("data", ((BaseResponse) value).data);
             }
-            onSuccess(value, jsonObject);
+            onSuccess(value, jsonObject.getJSONObject("data"));
         }else if (value instanceof BaseResponse){
             onFailure(((BaseResponse) value).msg);
         }else {

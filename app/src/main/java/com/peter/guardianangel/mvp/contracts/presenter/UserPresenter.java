@@ -1,10 +1,9 @@
 package com.peter.guardianangel.mvp.contracts.presenter;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.peter.guardianangel.base.BasePresenter;
 import com.peter.guardianangel.bean.User;
 import com.peter.guardianangel.data.UserData;
@@ -27,9 +26,9 @@ public class UserPresenter extends BasePresenter <UserView> {
         User user = UserData.getInstance().getUser();
         addSubscription(api.queryUserInfo(user), new ApiCallback<BaseResponse>() {
             @Override
-            public void onSuccess(BaseResponse response, JsonObject responseData) {
+            public void onSuccess(BaseResponse response, JSONObject responseData) {
                 if (response.isSuccess()) {
-                    User userinfo = new Gson().fromJson(responseData.toString(), User.class);
+                    User userinfo = JSON.parseObject(responseData.toJSONString(), User.class);
                     UserData.getInstance().setUser(userinfo);
                     mvpView.updateUserInfo(userinfo);
                 }else {

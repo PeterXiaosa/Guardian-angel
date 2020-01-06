@@ -29,9 +29,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <service
             android:name=".service.RefreshTokenService"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <activity
             android:name=".activity.UserInfoEditActivity"
@@ -72,6 +73,7 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
@@ -81,12 +83,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.SocketActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.AboutActivity"
+            android:screenOrientation="portrait">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
 
         <service
             android:name="com.baidu.location.f"

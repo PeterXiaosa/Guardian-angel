@@ -6,11 +6,15 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.peter.guardianangel.bean.MyLocation;
 import com.peter.guardianangel.bean.User;
 
 public class UserData {
+
+    private final String TAG = this.getClass().getSimpleName();
+
     private static final UserData ourInstance = new UserData();
 
     public static UserData getInstance() {
@@ -74,6 +78,7 @@ public class UserData {
             szDevIDShort = szDevIDShort + serial;
         }
 
+        Log.d(TAG, "device id : " + szDevIDShort);
         return szDevIDShort;
     }
 

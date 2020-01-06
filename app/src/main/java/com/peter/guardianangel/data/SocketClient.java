@@ -15,7 +15,7 @@ import java.nio.ByteBuffer;
  */
 public class SocketClient {
 
-    private static String urlStr = "ws://%s:8080/JavaWeb_war_exploded/mywebsocket/%s/%s";
+    private static String urlStr = "ws://%s:8080/JavaWeb_war_exploded/mywebsocket/%s/%s/%s";
 
     private WebSocketClient client;
 
@@ -24,7 +24,7 @@ public class SocketClient {
     }
 
     public SocketClient(String matchCode) {
-        String realUrl = String.format(urlStr, Api.IP, matchCode, UserData.getInstance().getDeviceId());
+        String realUrl = String.format(urlStr, Api.IP, matchCode, UserData.getInstance().getUser().getDeviceId(), UserData.getInstance().getUser().getAccount());
         URI uri = null;
         try {
             uri = new URI(realUrl);
@@ -41,7 +41,7 @@ public class SocketClient {
                         EventBus.getDefault().post(builder.buildEvent());
                         UserData.getInstance().setSocketClient(SocketClient.this);
                     } else {
-                        EventMessage.Builder builder = new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_CONNECT_OPEN)
+                        EventMessage.Builder builder = new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_MESSAGE_STRING)
                                 .setContent(message);
                         EventBus.getDefault().post(builder.buildEvent());
                     }
@@ -73,6 +73,10 @@ public class SocketClient {
 
     public void connect() {
         client.connect();
+    }
+
+    public void sendMessage(String message) {
+        client.send(message);
     }
 
     public void close(){

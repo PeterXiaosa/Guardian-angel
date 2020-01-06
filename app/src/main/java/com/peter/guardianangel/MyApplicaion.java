@@ -9,6 +9,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.service.LocationService;
 import com.peter.guardianangel.util.CertificateUtil;
+import com.peter.guardianangel.util.CrashHandler;
 import com.peter.guardianangel.util.DeviceIdentifier;
 
 import org.greenrobot.eventbus.EventBus;
@@ -32,6 +33,9 @@ public class MyApplicaion extends Application {
 
         UserData.getInstance().init(this);
         generateGenKey();
+
+        //写崩溃日志
+        CrashHandler.getInstance().init(this);
     }
 
     private void generateGenKey() {

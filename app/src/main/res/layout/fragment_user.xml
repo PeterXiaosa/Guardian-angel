@@ -32,7 +32,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_below="@+id/fragment_user_tv_setting"
+        android:layout_below="@id/fragment_user_tv_setting"
         android:orientation="vertical"
         android:background="@drawable/bg_layout">
         <RelativeLayout
@@ -112,6 +112,7 @@
             android:background="@color/divider"/>
 
         <RelativeLayout
+            android:id="@+id/fragment_user_rl_about"
             android:layout_width="match_parent"
             android:layout_height="40dp">
             <TextView

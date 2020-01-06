@@ -2,6 +2,7 @@ package com.peter.guardianangel.mvp.contracts.presenter;
 
 import android.support.annotation.NonNull;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
 import com.peter.guardianangel.base.BasePresenter;
 import com.peter.guardianangel.bean.User;
@@ -31,7 +32,7 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
 
         addSubscription(api.register(user), new ApiCallback<BaseResponse>() {
             @Override
-            public void onSuccess(BaseResponse response, JsonObject responseData) {
+            public void onSuccess(BaseResponse response, JSONObject responseData) {
                 if (response.isSuccess()) {
                     mvpView.registerSuccess();
                 }else {

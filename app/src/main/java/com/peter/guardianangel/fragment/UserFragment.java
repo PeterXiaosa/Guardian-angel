@@ -20,6 +20,8 @@ import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.peter.guardianangel.R;
+import com.peter.guardianangel.activity.AboutActivity;
+import com.peter.guardianangel.activity.UserActivity;
 import com.peter.guardianangel.activity.UserInfoEditActivity;
 import com.peter.guardianangel.bean.MyLocation;
 import com.peter.guardianangel.data.UserData;
@@ -29,7 +31,7 @@ public class UserFragment extends Fragment {
 
     GeoCoder mCoder;
 
-    RelativeLayout rl_account;
+    RelativeLayout rl_account, rl_about;
 
     @Nullable
     @Override
@@ -72,8 +74,8 @@ public class UserFragment extends Fragment {
         tv_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyLocation myLocation = UserData.getInstance().getPartnerLocation();
-                getAddress(myLocation);
+//                MyLocation myLocation = UserData.getInstance().getPartnerLocation();
+//                getAddress(myLocation);
             }
         });
 
@@ -81,7 +83,15 @@ public class UserFragment extends Fragment {
         rl_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), UserInfoEditActivity.class));
+                startActivity(new Intent(getActivity(), UserActivity.class));
+            }
+        });
+
+        rl_about = root.findViewById(R.id.fragment_user_rl_about);
+        rl_about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AboutActivity.class));
             }
         });
     }

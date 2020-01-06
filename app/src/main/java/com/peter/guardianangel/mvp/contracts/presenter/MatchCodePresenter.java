@@ -2,7 +2,7 @@ package com.peter.guardianangel.mvp.contracts.presenter;
 
 import android.util.Log;
 
-import com.google.gson.JsonObject;
+import com.alibaba.fastjson.JSONObject;
 import com.peter.guardianangel.base.BasePresenter;
 import com.peter.guardianangel.bean.MyLocation;
 import com.peter.guardianangel.data.EventMessage;
@@ -19,8 +19,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.java_websocket.client.WebSocketClient;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -51,17 +49,15 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
 
     public void getMatchCode() {
         JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("account", "fhc");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        jsonObject.put("account", "fhc");
+
         RequestBody body = RequestBody.create(mediaType, jsonObject.toString());
         addSubscription(api.getMatchCode(body), new ApiCallback<BaseResponse>() {
             @Override
-            public void onSuccess(BaseResponse response, JsonObject responseData) {
+            public void onSuccess(BaseResponse response, JSONObject responseData) {
                 if (response.data != null) {
                     Log.d("mymatchcode", "response data: " + response.data.toString());
+
                     String matchcode = String.valueOf(responseData.get("matchcode"));
                     if (matchcode.contains("\"")) {
                         matchcode = matchcode.replace("\"", "");
@@ -84,15 +80,12 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
 
     public void checkMatchCode(final String matchCode) {
         JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("matchcode", matchCode);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        jsonObject.put("matchcode", matchCode);
+
         RequestBody body = RequestBody.create(mediaType, jsonObject.toString());
         addSubscription(api.checkMatchCode(body), new ApiCallback<BaseResponse>() {
             @Override
-            public void onSuccess(BaseResponse response, JsonObject responseData) {
+            public void onSuccess(BaseResponse response, JSONObject responseData) {
                 WebSocketConnect.getInstance().disConnect();
                 longConnectConfig(matchCode);
             }

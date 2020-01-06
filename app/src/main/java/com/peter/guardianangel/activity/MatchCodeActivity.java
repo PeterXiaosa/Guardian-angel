@@ -76,7 +76,6 @@ public class MatchCodeActivity extends MvpActivity<MatchCodePresenter> implement
                 Toast.makeText(getApplicationContext(), "连接建立", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     @Override
@@ -87,7 +86,6 @@ public class MatchCodeActivity extends MvpActivity<MatchCodePresenter> implement
                 Toast.makeText(getApplicationContext(), "收到消息: " + message, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     @Override
@@ -126,6 +124,7 @@ public class MatchCodeActivity extends MvpActivity<MatchCodePresenter> implement
     @Override
     public void jumpMainPage() {
         startActivity(new Intent(MatchCodeActivity.this, ProtectActivity.class));
+        finish();
     }
 
     @Override

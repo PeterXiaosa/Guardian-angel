@@ -17,22 +17,22 @@ public class SimpleRatingView implements IRatingView {
     @Override
     public void setCurrentState(int state, int position,int starNums) {
 
-        TextView textView = mViewGroup.findViewById(R.id.tv_state);
+//        TextView textView = mViewGroup.findViewById(R.id.tv_state);
         ImageView ivStar = mViewGroup.findViewById(R.id.iv_star);
         switch (state) {
             case IRatingView.STATE_NONE:
                 ivStar.setImageResource(R.drawable.icon_star_none);
-                textView.setText("none");
+//                textView.setText("none");
                 break;
             case IRatingView.STATE_HALF:
                 ivStar.setImageResource(R.drawable.icon_star_half);
 
-                textView.setText("half");
+//                textView.setText("half");
                 break;
             case IRatingView.STATE_FULL:
                 ivStar.setImageResource(R.drawable.icon_star_full);
 
-                textView.setText("full");
+//                textView.setText("full");
 
                 break;
         }
