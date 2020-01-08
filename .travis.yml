@@ -10,6 +10,8 @@ env:
  - ADB_INSTALL_TIMEOUT=5 # minutes
   # - ANDROID_ABI=armeabi-v7a
  - ANDROID_ABI=google_apis/armeabi-v7a
+ - secure: YytN7C8UOugd0V5LkniUgPDbslGzU+ehWB1GoV61Rn5OfXv2YRZ9U6XUz9LnMaq9PA2hKHdYkNF5AeNizDSXZ8Uz9wtQBUw4eQUkX76u8OTdwPVV6dXfPrDqF4zbUav6cf+gOJopTAeJjo+p+0/LF435EoaOVLgCekBaa2u0yMDfJPBmr0IdO8QIE5ECCerHXzqsQh+fMVRZd25pJSBQHq6V6MqqKHDLt9pAr8qtiHV5+eSJTogWUeiVIw4UEYl6CeUWc3Owc/gsyWZuQaFn2sRsOA6gGXuDyYX81KOMTDTSmd49EhkoSSqgh8tPiFCl4OCkGhXu09dmZKH2LxZ51/12Um5M+1RVr931mipZBwD7ggdAi7i1yebkUfUJi8uzntP/tVubYNR5PRZ2KjeJHUx7ptIk9a5ktSAgC2QChUmNf4MI5sy25cvXOvLAvIr3xvWe51Xm/8LD81NIGfS8Q2AAu4w51R0HiXK0/TmjJ+8iySQpjUanbZpBYeIxEfAKvcfe4vJcpZ0U/VEiiUk6fKU/FzN0FAm+47k56L/8kqUFpzBEWMDiuZmiOblGpIBrda22N5Cbyzo9E/+T4XH3MIzoX8jR29aw4n5D8AQkXh7OQ5yKtCke7HYl1sdweFdVfsL1HMYxV1j+RDDrRuCa5JeaeY4efws3CqV1VGLBAOU=
+ - secure: I1rOgrwAadBIv8V3qtr3WH4X2iHk5/ZApK+muMANDCBcN1iTZJ8sbZN/57hXwShpH0AQfdZvGw4lF7IzDEfltu4/xr/5TRtlekHwR+EbddhXWyTMOi/dRcNjvfhf62PsjRxiMCAlOi0Znf4PWUsWv2Q45+zrO5oRFa587+680sKuqZgqNJAyAYu6iAc7yb6KUa2w87nspTfwo0q2xyRqY9lccTrths3/4sXOX13jxC1SsGyV5wpekRB085GyHvHODXLWkiRC6ZDFiZ5878WHttHCpuN1K++hTgN+t1O3sohlbiXUDT7XlqC3eOTVunrKgoS6x0EZQ3d0ET/RyTlOYplgm4N5Ov9aGTIP/AoFX+SylqHUk/I9niIkYUhHDpIZDI9Yt8hBZ0ETldNbCd1R5cWXlQ5Jcrxx4Scn6j4wyTacV0/rb2JZKYxyv0BQ8ge+P/romslw6pDK0WWuivXu3pT9pm38Y7cwSGuRhacX2aQuulkL7gIoBMlATsppRWcxNjiO4rj+f7WFzijARwiNg+sG+LATXy57DjKPSEDqbk/ZrJy5PxQsZ2wYrw/gfuySOPO97EXTwV7BfyFmCgYrvOjgW3LPFVsxTLjG5GpxbpjChdeJOI8aciDrQzEqvvjA6jfj7qKEqtVUEw/V38TjIilpbaBB0hNF+k4ixqbKa20=
 android:
   components:
   - tools
@@ -36,3 +38,20 @@ before_install:
   - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
   - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
   - chmod +x gradlew
+  - openssl aes-256-cbc -K $encrypted_1f9846efaca8_key -iv $encrypted_1f9846efaca8_iv -in mykeystore.jks.enc -out mykeystore.jks -d
+  - cd $TRAVIS_BUILD_DIR
+  - wget -c https://raw.githubusercontent.com/Pgyer/TravisFile/master/pgyer_upload.sh -O pgyer_upload.sh
+  - chmod +x pgyer_upload.sh
+
+after_success:
+- cp $TRAVIS_BUILD_DIR/mykeystore.jks $HOME
+- cd $TRAVIS_BUILD_DIR/app/build/outputs/apk/release
+- jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/mykeystore.jks
+  -storepass $storepass -keypass $keypass app-release-unsigned.apk peter
+- jarsigner -verify app-release-unsigned.apk
+- "${ANDROID_HOME}/build-tools/26.0.2/zipalign -v 4 app-release-unsigned.apk guardian-angel.apk"
+
+after_script:
+ - set -e 
+ - $TRAVIS_BUILD_DIR/pgyer_upload.sh "${TRAVIS_BUILD_DIR}/app/build/outputs/apk/release/guardian-angel.apk" "b4e280f310efa625dd9024e7f0693b6f"
+ - rm $TRAVIS_BUILD_DIR/pgyer_upload.sh
