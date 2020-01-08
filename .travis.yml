@@ -30,11 +30,6 @@ android:
 script:
   - ./gradlew assembleRelease
 
-before_script:
-- echo no | android create avd --force -n test -t android-${EMULATOR_API} --abi ${ANDROID_API_LEVEL}
-- emulator -avd test -no-skin -no-audio -no-window &
-- android-wait-for-emulator
-
 before_install:
   - yes | sdkmanager "platforms;android-26"
   - mkdir -p "$ANDROID_HOME/licenses"
