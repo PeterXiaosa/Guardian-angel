@@ -9,6 +9,7 @@ env:
  - ANDROID_BUILD_TOOLS=29.0.1
  - ADB_INSTALL_TIMEOUT=5 # minutes
   # - ANDROID_ABI=armeabi-v7a
+- ANDROID_ABI=google_apis/armeabi-v7a
 
 android:
   components:
@@ -21,8 +22,8 @@ android:
   - extra-google-m2repository
   - extra-android-m2repository        # 配置design 库 
   - extra-android-support
-  # - sys-img-armeabi-v7a-android-${ANDROID_API}
-  # - sys-img-armeabi-v7a-android-${EMULATOR_API}
+  - sys-img-armeabi-v7a-android-${ANDROID_API}
+  - sys-img-armeabi-v7a-android-${EMULATOR_API}
   licenses:
     - android-sdk-preview-license-.+
     - android-sdk-license-.+
@@ -31,7 +32,7 @@ script:
   - ./gradlew assembleRelease
 
 before_script:
-- echo no | android create avd --force -n test -t android-${EMULATOR_API} --abi armeabi-v7a
+- echo no | android create avd --force -n test -t android-${EMULATOR_API} --abi ${ANDROID_API_LEVEL}
 - emulator -avd test -no-skin -no-audio -no-window &
 - android-wait-for-emulator
 
