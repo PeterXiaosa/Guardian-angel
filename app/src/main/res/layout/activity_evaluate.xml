@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.EvaluateActivity"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:background="@color/title_blue">
+
+        <ImageView
+            android:id="@+id/activity_userinfo_edit_ig_back"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/btn_back_normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:text="评价"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+
+    <com.peter.guardianangel.view.starRatingBar.CustomRatingBar
+        android:id="@+id/activity_about_crb_judge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/y200"
+        app:numStars="5" />
+
+    <EditText
+        android:id="@+id/activity_evaluate_et_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y500"
+        android:layout_marginTop="@dimen/y100"
+        android:paddingTop="@dimen/x10"
+        android:paddingStart="@dimen/x10"
+        android:layout_marginStart="@dimen/x150"
+        android:layout_marginEnd="@dimen/x150"
+        android:background="@drawable/shap"
+        android:hint="请输入评价"
+        android:gravity="start"
+        android:textSize="@dimen/x38"/>
+
+    <TextView
+        android:id="@+id/activity_evaluate_tv_text_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/x20"
+        android:layout_marginEnd="@dimen/x150"
+        android:text="100/500"
+        android:textColor="@color/black"/>
+
+    <Button
+        android:id="@+id/activity_evaluate_btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/x50"
+        android:layout_marginEnd="@dimen/x150"
+        android:text="提交"
+        android:textColor="@color/black"/>
+</LinearLayout>

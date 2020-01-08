@@ -27,22 +27,22 @@ android {
     }
 
     signingConfigs {
-        myConfig {
-            keyAlias 'peter'
-            keyPassword 'fhc123456'
-            storeFile file('./mykeystore.jks')
-            storePassword 'fhc123456'
-        }
+//        myConfig {
+//            keyAlias 'peter'
+//            keyPassword 'fhc123456'
+//            storeFile file('./mykeystore.jks')
+//            storePassword 'fhc123456'
+//        }
     }
 
     buildTypes {
-        debug {
-            signingConfig signingConfigs.myConfig
-        }
+//        debug {
+//            signingConfig signingConfigs.myConfig
+//        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.myConfig
+//            signingConfig signingConfigs.myConfig
         }
     }
 
