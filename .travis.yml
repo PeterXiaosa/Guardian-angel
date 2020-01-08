@@ -14,7 +14,4 @@ android:
   - extra-android-support
   - extra-android-m2repository
 script:
-  - ./gradlew :app:assembleRelease
-
-before_install:
-sdkmanager "platform-tools" "build-tools;29.0.1" "platforms;android-26"
+  - ./gradlew assembleRelease
