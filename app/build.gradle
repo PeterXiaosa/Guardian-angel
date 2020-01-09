@@ -17,32 +17,25 @@ android {
                 arguments = [eventBusIndex: 'com.peter.guardianangel.MyEventBusIndex']
             }
         }
-
-//        lintOptions {
-//            checkReleaseBuilds false
-//            // Or, if you prefer, you can continue to check for errors in release builds,
-//            // but continue the build even when errors are found:
-//            abortOnError false
-//        }
     }
 
     signingConfigs {
-//        myConfig {
-//            keyAlias 'peter'
-//            keyPassword 'fhc123456'
-//            storeFile file('./mykeystore.jks')
-//            storePassword 'fhc123456'
-//        }
+        myConfig {
+            keyAlias project.hasProperty("ALIAS_NAME") ? ALIAS_NAME : System.getenv("ALIAS_NAME")
+            keyPassword project.hasProperty("ALIAS_PASS") ? ALIAS_PASS : System.getenv("ALIAS_PASS")
+            storeFile file('./mykeystore.jks')
+            storePassword project.hasProperty("KEYSTORE_PASS") ? KEYSTORE_PASS : System.getenv("KEYSTORE_PASS")
+        }
     }
 
     buildTypes {
-//        debug {
-//            signingConfig signingConfigs.myConfig
-//        }
+        debug {
+            signingConfig signingConfigs.myConfig
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.myConfig
+            signingConfig signingConfigs.myConfig
         }
     }
 
