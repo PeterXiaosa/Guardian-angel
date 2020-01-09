@@ -1,17 +1,13 @@
 dist: xenial
 language: android
-jdk: oraclejdk8          #jdk版本
-
+jdk: oraclejdk8
 env:
- global:
- - ANDROID_API=26
- - EMULATOR_API=26
- - ANDROID_BUILD_TOOLS=29.0.1
- - ADB_INSTALL_TIMEOUT=5 # minutes
-  # - ANDROID_ABI=armeabi-v7a
- - ANDROID_ABI=google_apis/armeabi-v7a
-#  - secure: eKUhiiQnDpUWYCZnrZUWOl7moY0vIa6v8cIX1Zr2qTvX3RhQDtf5NkwELX2DpGV14M03xuPQdOy5qCktt+dMs51w6i9JSOLmt8OU24d59ArFCCu5LKx/iLfBZgw2LLnnmiA48aQjj6fOP8eu/S2TGkrkEm7atcqt0KWZH8YwyI+vMlpO49VVJHoD9qT5z1RfUsrOqhwxkVd7s6asw2PTOTEpD63xYiYPcnd/GnlHrvL9c6xLY+eBFcYg70OT//nBf+JYEMi1p6nrDFiWKY6qXrc1O4aM4CaR4JitGGohbNmj67byAoCvbq8OuRhnRjNc2OkKVK5lq+JV6ubl5290uProz8pzUY48wshOjuMfI7rKnF6wcqKsv5USq3jlatI98BjWKTrgsZZKNnxkHYpy03e3Y+o/A+JimtBF7j9Uk48iRu2IhOi3MC7gUDQFpI2mMfnCVAMwIyA0b3JLd54XgwU0ZAhvpO6gc4zL5qvsjRlyDOvEqIq3RX5eskDfvHujws92MbPbdkUnoa7t+qPTNNDZcfZle/BqiQHFDuO9Y0saFUIra/DaULhCP5EHcsCJLJKx4or1fyMGIk9aKyNbF7HQdlGniD6THygvpPt6/76pO0awE/J6MzbVLEcWXTF4CruQ3CkwiQNZNthjZK4MMF4+3JC0QfhmImNPEpiGOAA=
-#  - secure: rGT6sgF9a/zNsd+Z2vczglEyFS1ATG9Of0OkGwrGzbvKlwgakscU8mNF9FViokr6xr53a4v40vFMynjIrrqpdblUievGkiTxoUKebRBH/dZYFIm9JHB4UovI0XoBeei3AWVnI6lb1BgumbhNi2MwHg4r1wBiN5C2GIzPkdiYSw9RIz4BeYcdHm9RLnrtDvy4T+C9Cup5Zp6aOH1DmV+FHnmKyrU+THicxoVjRKfNwN4sligh1C+S7VjrJO0SL1d9YU+QAaGfiZaw9EucYIFfP8doKsdAq0kTUg3u78p1IgsQE1mMHGXFPBUsfyGB3B6F4kv2To1YPzrvX3L8POZ8Ly25oDhbpOwfzIE/0gRFfYFegFodv6oUxxrjR8D8OTm/E2qc/fvwdhhXRdhSwcBy66gMVaVHFbWzfXOeROo8Z8QF+XNdQG8vHx+ndnxcQKBGTyzQCXkQduUEv1ZkWxuff49JDxD9UiY9sc0imiKrzUSk7Zwg+G7M13//it3CZKWA/8uztaWsmhcxh+4V3lA8S2KXa6d24wcu9jxCD0bosDBr1vV97VBizk/jJmM7+zrZZXaxxRgYyzROg+vByCWV7W9OwU02VHz4glLBCx9BDTP7tD7sgLlIi4XCocojhuFKcT9q00os5+NLCmcu3dhKMWjj0dIX2uha2tTicd+9U/0=
+  global:
+  - ANDROID_API=26
+  - EMULATOR_API=26
+  - ANDROID_BUILD_TOOLS=29.0.1
+  - ADB_INSTALL_TIMEOUT=5
+  - ANDROID_ABI=google_apis/armeabi-v7a
 android:
   components:
   - tools
@@ -21,37 +17,26 @@ android:
   - android-${ANDROID_API}
   - android-${EMULATOR_API}
   - extra-google-m2repository
-  - extra-android-m2repository        # 配置design 库 
+  - extra-android-m2repository
   - extra-android-support
-  # - sys-img-armeabi-v7a-android-${ANDROID_API}
-  # - sys-img-armeabi-v7a-android-${EMULATOR_API}
   licenses:
-    - android-sdk-preview-license-.+
-    - android-sdk-license-.+
-    - '.+'
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
+  - ".+"
 script:
-  - ./gradlew assembleRelease
-
+- "./gradlew :app:assembleRelease"
 before_install:
-  - yes | sdkmanager "platforms;android-26"
-  - mkdir -p "$ANDROID_HOME/licenses"
-  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
-  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
-  - chmod +x gradlew
-  # - openssl aes-256-cbc -K $encrypted_8ebee4ac52c0_key -iv $encrypted_8ebee4ac52c0_iv -in mykeystore.jks.enc -out mykeystore.jks -d
-  # - cd $TRAVIS_BUILD_DIR
-  # - wget -c https://raw.githubusercontent.com/Pgyer/TravisFile/master/pgyer_upload.sh -O pgyer_upload.sh
-  # - chmod +x pgyer_upload.sh
-
-# after_success:
-# - cp $TRAVIS_BUILD_DIR/mykeystore.jks $HOME
-# - cd $TRAVIS_BUILD_DIR/app/build/outputs/apk/release
-# - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/mykeystore.jks
-#   -storepass $storepass -keypass $keypass app-release-unsigned.apk peter
-# - jarsigner -verify app-release-unsigned.apk
-# - "${ANDROID_HOME}/build-tools/26.0.2/zipalign -v 4 app-release-unsigned.apk guardian-angel.apk"
-
-# after_script:
-#  - set -e 
-#  - $TRAVIS_BUILD_DIR/pgyer_upload.sh "${TRAVIS_BUILD_DIR}/app/build/outputs/apk/release/guardian-angel.apk" "b4e280f310efa625dd9024e7f0693b6f"
-#  - rm $TRAVIS_BUILD_DIR/pgyer_upload.sh
+- openssl aes-256-cbc -K $encrypted_1f9846efaca8_key -iv $encrypted_1f9846efaca8_iv
+  -in mykeystore.jks.enc -out mykeystore.jks -d
+- yes | sdkmanager "platforms;android-26"
+- mkdir -p "$ANDROID_HOME/licenses"
+- echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+- echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+- chmod +x gradlew
+deploy:
+  provider: releases
+  api_key:
+    secure: dhGhJMUTZje72ZNpKtnPBH9Dig/tIyjXrIE35D1S1uflZKlvMZZmB65UDGJzXHGtxoqRuaY1U6VB8TZcXU5+7/vuGlMpsD6/qFnepmwPRGxBW4aQrRFAkGh3HBpEd9Assuu/IP3VB0/TOSHOQwAwrkxpyQh5ocxng0WqS0+xqdHZR0YZNwbLbF9zb7GGWiYrtgCAFrh4QYMogATFNp+x7wp4EMFF0O+CO1O2nSpnjOIdZhQXBOnw8V0gVpaR17NbiOBhfDfo34iLAOdGVu/KfBahxzEIhU5PIq6oUz5tUCWDwQa74MvyHZ2Ij1Y2hP53CrF/5Vb4Dl8aF+oaUIzWqwPdBZk7pI0hg8mupLoJNWCeCXG4Y5dT7IQIaQgvLYe74dAE/C+9QFaqlXETXcPUjbFDvVcSMLDk7lfY3fBWKlcWpv0T7tDOGPzl8zWtTgSuWqdtth4iFgTWQwXfGY4v9NpGWOePA0NAekQnxF/fL079+Hj9kDOxoIlTQWGQyR+uxbxqo7hSwmB1koOw1XowWWTajyvpXS7AUbNF5OxL4+FUZHvTE/PlpGyi3sTbFP7BHSV/+5PgdHzTynzdZlxoYVgEVYHFz2DTa2FCSd7sHIJ3pCT7FT+UGRV1fqKZJE09XmiXPxIE8VaOKYWD9gpiZYnV7/wMu/D/JXSjkRm+YPM=
+  file: y
+  on:
+    repo: PeterXiaosa/Guardian-angel
