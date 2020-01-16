@@ -25,7 +25,7 @@ public class SocketClient {
 
     public SocketClient(String matchCode) {
         String realUrl = String.format(urlStr, Api.IP, matchCode, UserData.getInstance().getUser().getDeviceId(), UserData.getInstance().getUser().getAccount());
-        URI uri = null;
+        URI uri;
         try {
             uri = new URI(realUrl);
             client = new WebSocketClient(uri) {

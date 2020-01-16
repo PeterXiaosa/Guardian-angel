@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"/>
 
     <TextView
-        android:id="@+id/fragment_user_tv_setting"
+        android:id="@+id/fragment_user_tv_location"
         android:layout_width="160dp"
         android:layout_height="40dp"
         android:layout_marginTop="30dp"
@@ -32,19 +32,26 @@
         android:layout_marginTop="30dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_below="@id/fragment_user_tv_setting"
+        android:layout_below="@id/fragment_user_tv_location"
         android:orientation="vertical"
         android:background="@drawable/bg_layout">
         <RelativeLayout
             android:id="@+id/fragment_user_rl_account"
             android:layout_width="match_parent"
             android:layout_height="40dp">
+            <com.peter.guardianangel.view.IconFont
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/x20"
+                android:text="@string/setting"
+                android:textSize="@dimen/x60"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="账号设置"
                 android:textColor="#000"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="@dimen/x100"
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
 
@@ -54,14 +61,22 @@
             android:background="@color/divider"/>
 
         <RelativeLayout
+            android:id="@+id/fragment_user_rl_share"
             android:layout_width="match_parent"
             android:layout_height="40dp">
+            <com.peter.guardianangel.view.IconFont
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/x20"
+                android:text="@string/share"
+                android:textSize="@dimen/x60"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="应用分享"
                 android:textColor="#000"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="@dimen/x100"
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
 
@@ -78,14 +93,23 @@
         android:orientation="vertical"
         android:background="@drawable/bg_layout">
         <RelativeLayout
+            android:id="@+id/fragment_user_rl_update"
             android:layout_width="match_parent"
             android:layout_height="40dp">
+            <com.peter.guardianangel.view.IconFont
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/x20"
+                android:text="@string/update"
+                android:textSize="@dimen/x60"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="检查更新"
                 android:textColor="#000"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="@dimen/x100"
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
 
@@ -95,14 +119,24 @@
             android:background="@color/divider"/>
 
         <RelativeLayout
+            android:id="@+id/fragment_user_rl_feedback"
             android:layout_width="match_parent"
             android:layout_height="40dp">
+
+            <com.peter.guardianangel.view.IconFont
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/x20"
+                android:text="@string/feekback"
+                android:textSize="@dimen/x60"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="帮助与反馈"
                 android:textColor="#000"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="@dimen/x100"
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
 
@@ -115,12 +149,20 @@
             android:id="@+id/fragment_user_rl_about"
             android:layout_width="match_parent"
             android:layout_height="40dp">
+            <com.peter.guardianangel.view.IconFont
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/x20"
+                android:text="@string/about"
+                android:textSize="@dimen/x60"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="关于"
                 android:textColor="#000"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="@dimen/x100"
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
 

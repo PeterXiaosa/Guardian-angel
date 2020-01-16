@@ -1,7 +1,5 @@
 package com.peter.guardianangel.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
@@ -12,8 +10,11 @@ import com.peter.guardianangel.R;
 import com.peter.guardianangel.mvp.MvpActivity;
 import com.peter.guardianangel.mvp.contracts.presenter.EvaluatePresenter;
 import com.peter.guardianangel.mvp.contracts.view.EvaluateView;
+import com.peter.guardianangel.util.ToastHelper;
+import com.peter.guardianangel.view.MyToolbar;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class EvaluateActivity extends MvpActivity<EvaluatePresenter> implements EvaluateView {
 
@@ -23,6 +24,10 @@ public class EvaluateActivity extends MvpActivity<EvaluatePresenter> implements 
     TextView tv_text_num;
     @BindView(R.id.activity_evaluate_btn_submit)
     Button btn_submit;
+    @BindView(R.id.activity_evaluate_tv_text_maxnum)
+    TextView tv_maxnum;
+    @BindView(R.id.activity_evaluate_toolbar)
+    MyToolbar toolbar;
 
     private final int maxNum = 200;
 
@@ -34,6 +39,7 @@ public class EvaluateActivity extends MvpActivity<EvaluatePresenter> implements 
     @Override
     protected void initView() {
         super.initView();
+        tv_maxnum.setText(String.valueOf(maxNum));
 
         et_content.addTextChangedListener(new TextWatcher() {
             @Override
@@ -48,9 +54,30 @@ public class EvaluateActivity extends MvpActivity<EvaluatePresenter> implements 
 
             @Override
             public void afterTextChanged(Editable s) {
-                tv_text_num.setText(s.length() + " / " + maxNum);
+                tv_text_num.setText(String.valueOf(s.length()));
+                if (s.length() > maxNum) {
+                    tv_text_num.setTextColor(getResources().getColor(R.color.red, null));
+                } else {
+                    tv_text_num.setTextColor(getResources().getColor(R.color.black, null));
+                }
             }
         });
+
+        toolbar.setToolbarClick(new MyToolbar.IToolbarClick() {
+            @Override
+            public void clickIcon(boolean isLeft, int position) {
+                if (isLeft && position == 1) {
+                    finish();
+                }
+            }
+        });
+    }
+
+    @OnClick(R.id.activity_evaluate_btn_submit)
+    public void submit() {
+        if (et_content.getText().toString().length() > maxNum) {
+            ToastHelper.show(getApplicationContext(), "不要写小作文啦，字数已超过最大限制");
+        }
     }
 
     @Override

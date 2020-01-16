@@ -3,7 +3,7 @@ package com.peter.guardianangel.mvp.contracts.view;
 import com.peter.guardianangel.base.BaseView;
 
 public interface LoginView extends BaseView {
-    void loginSuccess();
+    void loginSuccess(boolean isMatch);
 
     void loginFail(String errorMsg, int errorCode);
 

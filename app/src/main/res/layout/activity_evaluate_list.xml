@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.EvaluateListActivity"
+    android:orientation="vertical">
+
+    <com.peter.guardianangel.view.MyToolbar
+        android:id="@+id/activity_evalute_list_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:title="评价列表"
+        app:left_icon1="@string/back"/>
+
+    <ExpandableListView
+        android:id="@+id/activity_evalute_list_elv_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:groupIndicator="@null"/>
+</LinearLayout>

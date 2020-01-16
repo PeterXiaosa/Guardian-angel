@@ -1,9 +1,5 @@
 package com.peter.guardianangel.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.peter.guardianangel.BaseActivity;
 import com.peter.guardianangel.R;

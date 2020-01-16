@@ -50,6 +50,6 @@ public class LocationListener extends BDAbstractLocationListener {
             calback.setLongitude(longitude);
 
             calback.setLocation(accuracy, direction, latitude, longitude);
-        Log.d(TAG, "onReceiveLocation: ");
+//        Log.d(TAG, "onReceiveLocation: ");
         }
     }

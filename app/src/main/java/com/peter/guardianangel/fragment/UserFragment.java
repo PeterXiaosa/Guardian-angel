@@ -19,28 +19,42 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.peter.guardianangel.BaseFragment;
 import com.peter.guardianangel.R;
 import com.peter.guardianangel.activity.AboutActivity;
+import com.peter.guardianangel.activity.EvaluateListActivity;
 import com.peter.guardianangel.activity.UserActivity;
 import com.peter.guardianangel.activity.UserInfoEditActivity;
 import com.peter.guardianangel.bean.MyLocation;
 import com.peter.guardianangel.data.UserData;
+import com.peter.guardianangel.util.ToastHelper;
 
-public class UserFragment extends Fragment {
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class UserFragment extends BaseFragment {
+
+    @BindView(R.id.fragment_user_tv_location)
     TextView tv_location;
 
     GeoCoder mCoder;
 
-    RelativeLayout rl_account, rl_about;
+    @BindView(R.id.fragment_user_rl_account)
+    RelativeLayout rl_account;
+    @BindView(R.id.fragment_user_rl_share)
+    RelativeLayout rl_share;
+    @BindView(R.id.fragment_user_rl_update)
+    RelativeLayout rl_update;
+    @BindView(R.id.fragment_user_rl_feedback)
+    RelativeLayout rl_feedback;
+    @BindView(R.id.fragment_user_rl_about)
+    RelativeLayout rl_about;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        return super.onCreateView(inflater, container, savedInstanceState);
-        View root = inflater.inflate(R.layout.fragment_user,container,false);
-        initView(root);
+    protected void initData() {
+        super.initData();
+
         initReverseGeoCoder();
-        return root;
     }
 
     private void initReverseGeoCoder() {
@@ -69,34 +83,54 @@ public class UserFragment extends Fragment {
         mCoder.setOnGetGeoCodeResultListener(listener);
     }
 
-    private void initView(View root) {
-        tv_location = root.findViewById(R.id.fragment_user_tv_setting);
-        tv_location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                MyLocation myLocation = UserData.getInstance().getPartnerLocation();
-//                getAddress(myLocation);
-            }
-        });
+    @Override
+    protected void initView(View root) {
+        super.initView(root);
+    }
 
-        rl_account = root.findViewById(R.id.fragment_user_rl_account);
-        rl_account.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), UserActivity.class));
-            }
-        });
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_user;
+    }
 
-        rl_about = root.findViewById(R.id.fragment_user_rl_about);
-        rl_about.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AboutActivity.class));
-            }
-        });
+    @OnClick(R.id.fragment_user_tv_location)
+    public void location() {
+        MyLocation myLocation = UserData.getInstance().getPartnerLocation();
+        getAddress(myLocation);
+    }
+
+    @OnClick(R.id.fragment_user_rl_account)
+    public void account() {
+        startActivity(new Intent(getActivity(), UserActivity.class));
+    }
+
+    @OnClick(R.id.fragment_user_rl_share)
+    public void share() {
+        ToastHelper.show(getContext(), "功能尚未开放~");
+    }
+
+    @OnClick(R.id.fragment_user_rl_update)
+    public void update() {
+        ToastHelper.show(getContext(), "功能尚未开放~");
+    }
+
+    @OnClick(R.id.fragment_user_rl_feedback)
+    public void feedback() {
+        ToastHelper.show(getContext(), "功能尚未开放~");
+    }
+
+
+    @OnClick(R.id.fragment_user_rl_about)
+    public void about() {
+        ToastHelper.show(getContext(), "功能尚未开放~");
+//        startActivity(new Intent(getActivity(), EvaluateListActivity.class));
     }
 
     private void getAddress(MyLocation location){
+        if (location == null) {
+            ToastHelper.show(getContext(), "未获取到地址信息");
+            return;
+        }
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         mCoder.reverseGeoCode(new ReverseGeoCodeOption()
                         .location(latLng)

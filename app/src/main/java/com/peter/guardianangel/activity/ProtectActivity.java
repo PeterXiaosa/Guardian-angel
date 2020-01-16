@@ -8,27 +8,35 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.peter.guardianangel.R;
+import com.peter.guardianangel.bean.User;
 import com.peter.guardianangel.data.SocketClient;
 import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.fragment.MainFragment;
 import com.peter.guardianangel.fragment.RecordFragment;
 import com.peter.guardianangel.fragment.UserFragment;
 import com.peter.guardianangel.service.LocationService;
+import com.peter.guardianangel.util.DoubleClickExitHelper;
 import com.peter.guardianangel.util.FragmentHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProtectActivity extends AppCompatActivity {
-    private TextView mTextMessage;
+
     private Fragment fragment1, fragment2, fragment3;
     private int lastShowFragment = 3;
+
+    protected DoubleClickExitHelper mDoubleClickExitHelper;//双击后退键，退出程序
 
     BottomNavigationView navView;
 
@@ -70,11 +78,15 @@ public class ProtectActivity extends AppCompatActivity {
     };
 
     private boolean isJumpActivity(){
-        SocketClient socketClient = UserData.getInstance().getSocketClient();
-        if (socketClient == null) {
-            return true;
-        } else {
+        User user = UserData.getInstance().getUser();
+
+        String partnerAccount = user.getPartnerAccount();
+        String loveAuth = user.getLoveAuth();
+
+        if (partnerAccount != null && loveAuth != null && !partnerAccount.isEmpty() && !loveAuth.isEmpty()) {
             return false;
+        } else {
+            return true;
         }
     }
 
@@ -85,14 +97,28 @@ public class ProtectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_protect);
         navView = findViewById(R.id.nav_view);
 
-        mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        mDoubleClickExitHelper = new DoubleClickExitHelper(this);
 
         initFragment();
 
         initPermission();
 
         startService();
+
+        longConnect();
+    }
+
+    private void longConnect() {
+        User userinfo = UserData.getInstance().getUser();
+
+        String partnerAccount = userinfo.getPartnerAccount();
+        String loveAuth = userinfo.getLoveAuth();
+
+        if (partnerAccount != null && loveAuth != null && !partnerAccount.isEmpty() && !loveAuth.isEmpty()) {
+            SocketClient socketClient = new SocketClient("-1");
+            socketClient.connect();
+        }
     }
 
     private void startService() {
@@ -104,7 +130,8 @@ public class ProtectActivity extends AppCompatActivity {
         fragment2 = new RecordFragment();
         fragment3 = new UserFragment();
         lastShowFragment = 3;
-        FragmentHelper.initFragment(fragment3, this);
+        FragmentHelper.initFragment(fragment1, this);
+        navView.setSelectedItemId(R.id.navigation_home);
     }
 
     private void initPermission() {
@@ -129,9 +156,24 @@ public class ProtectActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return mDoubleClickExitHelper.onKeyDown(keyCode, event);
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        if (isJumpActivity()) {
+//        if (isJumpActivity()) {
+//            navView.setSelectedItemId(R.id.navigation_notifications);
+//        }
+        if (!fragment1.isHidden()) {
+            navView.setSelectedItemId(R.id.navigation_home);
+        } else if (!fragment2.isHidden()) {
+            navView.setSelectedItemId(R.id.navigation_dashboard);
+        } else if (!fragment3.isHidden()) {
             navView.setSelectedItemId(R.id.navigation_notifications);
         }
     }

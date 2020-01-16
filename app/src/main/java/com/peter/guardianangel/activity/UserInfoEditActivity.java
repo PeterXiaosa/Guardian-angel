@@ -15,6 +15,7 @@ import com.peter.guardianangel.mvp.contracts.presenter.UserInfoEditPresenter;
 import com.peter.guardianangel.mvp.contracts.view.UserInfoEditView;
 import com.peter.guardianangel.util.CalendarUtil;
 import com.peter.guardianangel.util.ToastHelper;
+import com.peter.guardianangel.view.MyToolbar;
 import com.peter.guardianangel.view.daypicker.DateSelectKeyboardDialog;
 
 import java.text.ParseException;
@@ -30,12 +31,8 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
-public class UserInfoEditActivity extends MvpActivity<UserInfoEditPresenter> implements UserInfoEditView {
+public class UserInfoEditActivity extends MvpActivity<UserInfoEditPresenter> implements UserInfoEditView , MyToolbar.IToolbarClick{
 
-    @BindView(R.id.activity_userinfo_edit_tv_save)
-    TextView tv_save;
-    @BindView(R.id.activity_userinfo_edit_ig_back)
-    ImageView iv_back;
     @BindView(R.id.activity_user_info_edit_tv_birthday_value)
     TextView tv_birthday;
     @BindView(R.id.activity_user_info_edit_rg_sex)
@@ -46,7 +43,8 @@ public class UserInfoEditActivity extends MvpActivity<UserInfoEditPresenter> imp
     RadioButton rb_male;
     @BindView(R.id.activity_user_info_edit_et_name)
     EditText et_name;
-
+    @BindView(R.id.activity_user_info_edit_toolbar)
+    MyToolbar toolbar;
 
     final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
@@ -61,6 +59,13 @@ public class UserInfoEditActivity extends MvpActivity<UserInfoEditPresenter> imp
     }
 
     @Override
+    protected void initView() {
+        super.initView();
+
+        toolbar.setToolbarClick(this);
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_user_info_edit;
     }
@@ -70,14 +75,8 @@ public class UserInfoEditActivity extends MvpActivity<UserInfoEditPresenter> imp
         return new UserInfoEditPresenter(this);
     }
 
-    @OnClick(R.id.activity_userinfo_edit_ig_back)
-    public void back() {
-        finish();
-    }
-
     @SuppressLint("CheckResult")
-    @OnClick(R.id.activity_userinfo_edit_tv_save)
-    public void save() {
+    private void save() {
         boolean ismale = true;
         int buttonid = rg_sex.getCheckedRadioButtonId();
         if (buttonid == R.id.activity_user_info_edit_rb_female) {
@@ -115,7 +114,6 @@ public class UserInfoEditActivity extends MvpActivity<UserInfoEditPresenter> imp
                 }
             }
         });
-
     }
 
     @OnClick(R.id.activity_user_info_edit_tv_birthday_value)
@@ -167,5 +165,14 @@ public class UserInfoEditActivity extends MvpActivity<UserInfoEditPresenter> imp
     @Override
     public void updateUserInfofail() {
         ToastHelper.show(this, "用户信息更新失败");
+    }
+
+    @Override
+    public void clickIcon(boolean isLeft, int position) {
+        if (isLeft && position ==1) {
+            finish();
+        } else if (!isLeft && position ==1) {
+            save();
+        }
     }
 }

@@ -19,7 +19,6 @@ public abstract class BaseFragment extends Fragment {
     protected Context mContext;
     protected ViewGroup mViewGroup;
     protected View mRoot;
-    protected LayoutInflater mInflater;
     private Unbinder unbinder;
 
     protected void initData(){}
@@ -58,10 +57,10 @@ public abstract class BaseFragment extends Fragment {
             }
         }else{
             mRoot = inflater.inflate(getLayoutId(),container,false);
-            mInflater = inflater;
-            unbinder = ButterKnife.bind(this, mRoot);
             initView(mRoot);
         }
+        unbinder = ButterKnife.bind(this, mRoot);
+
         return mRoot;
     }
 

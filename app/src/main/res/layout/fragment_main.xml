@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/y50">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -16,7 +17,7 @@
             android:textColor="#fff"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/y400"
             android:layout_marginTop="20dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
@@ -24,7 +25,7 @@
             android:background="@drawable/bg_layout">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="@dimen/y100">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -38,6 +39,65 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/divider"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/fragment_main_rl_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/x50">
+                    <com.peter.guardianangel.view.IconFont
+                        android:id="@+id/fragment_main_if_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/y50"
+                        android:text="@string/card"
+                        android:textSize="@dimen/x160"/>
+
+                    <TextView
+                        android:id="@+id/fragment_main_tv_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="@dimen/y40"
+                        android:text="卡卡"
+                        android:textSize="@dimen/x40"
+                        android:textColor="@color/black"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fragment_main_rl_evaluate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/x80">
+                    <com.peter.guardianangel.view.IconFont
+                        android:id="@+id/fragment_main_if_judge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/y50"
+                        android:text="@string/judge"
+                        android:textSize="@dimen/x120"/>
+
+                    <TextView
+                        android:id="@+id/fragment_main_tv_judge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="@dimen/y40"
+                        android:text="评价"
+                        android:textSize="@dimen/x40"
+                        android:textColor="@color/black"/>
+                </RelativeLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

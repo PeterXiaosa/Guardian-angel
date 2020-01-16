@@ -22,7 +22,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler{
     private static final String TAG = "CrashHandler";
     private static final boolean DEBUG = true;
 
-    private static final String PATH = Environment.getExternalStorageDirectory().getPath() + "/ProtectApp/CrashLog/";
+    private static final String PATH = Environment.getExternalStorageDirectory().getPath() + "/GuardianAngel/CrashLog/";
     private static final String FILE_NAME = "crash";
     private static final String FILE_NAME_SUFFIX = ".log";
 
@@ -126,7 +126,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler{
     public void dumpLogCatToSDCard() throws IOException {
         long current = System.currentTimeMillis();
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(current));
-        String PATH1 = Environment.getExternalStorageDirectory().getPath() + "/PlayApp/LogCat/";
+        String PATH1 = Environment.getExternalStorageDirectory().getPath() + "/GuardianAngel/LogCat/";
         File dir = new File(PATH1);
         if (!dir.exists()) {
             dir.mkdirs();

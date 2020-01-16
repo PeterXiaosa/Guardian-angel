@@ -9,11 +9,12 @@ import com.peter.guardianangel.bean.User;
 import com.peter.guardianangel.mvp.MvpActivity;
 import com.peter.guardianangel.mvp.contracts.presenter.UserPresenter;
 import com.peter.guardianangel.mvp.contracts.view.UserView;
+import com.peter.guardianangel.view.MyToolbar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class UserActivity extends MvpActivity<UserPresenter> implements UserView {
+public class UserActivity extends MvpActivity<UserPresenter> implements UserView , MyToolbar.IToolbarClick{
 
     @BindView(R.id.activity_user_tv_name_value)
     TextView tv_name;
@@ -21,11 +22,8 @@ public class UserActivity extends MvpActivity<UserPresenter> implements UserView
     TextView tv_sex;
     @BindView(R.id.activity_user_tv_birthday_value)
     TextView tv_birthday;
-    @BindView(R.id.activity_user_tv_edit)
-    TextView tv_edit;
-    @BindView(R.id.activity_user_ig_back)
-    ImageView iv_back;
-
+    @BindView(R.id.activity_user_toolbar)
+    MyToolbar toolbar;
 
     @Override
     protected int getLayoutId() {
@@ -36,6 +34,12 @@ public class UserActivity extends MvpActivity<UserPresenter> implements UserView
     protected void initData() {
         super.initData();
         presenter.getUserInfo();
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        toolbar.setToolbarClick(this);
     }
 
     @Override
@@ -65,19 +69,18 @@ public class UserActivity extends MvpActivity<UserPresenter> implements UserView
 
     }
 
-    @OnClick(R.id.activity_user_ig_back)
-    public void back() {
-        finish();
-    }
-
-    @OnClick(R.id.activity_user_tv_edit)
-    public void edit() {
-        startActivity(new Intent(UserActivity.this, UserInfoEditActivity.class));
-    }
-
     @Override
     protected void onRestart() {
         super.onRestart();
         presenter.getUserInfo();
+    }
+
+    @Override
+    public void clickIcon(boolean isLeft, int position) {
+        if (isLeft && position == 1) {
+            finish();
+        } else if (!isLeft && position == 1) {
+            startActivity(new Intent(UserActivity.this, UserInfoEditActivity.class));
+        }
     }
 }

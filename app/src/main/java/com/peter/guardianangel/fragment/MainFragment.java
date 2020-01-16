@@ -16,28 +16,25 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
+import com.peter.guardianangel.BaseFragment;
 import com.peter.guardianangel.R;
+import com.peter.guardianangel.activity.EvaluateListActivity;
 import com.peter.guardianangel.activity.MapActivity;
 
-public class MainFragment extends Fragment {
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class MainFragment extends BaseFragment {
     MapView mapView;
     BaiduMap map;
     LocationClient locationClient;
 
     TextView tv_detail_location;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        return super.onCreateView(inflater, container, savedInstanceState);
-        View layout = inflater.inflate(R.layout.fragment_main,container,false);
-        initView(layout);
-        initdata();
-        return layout;
-    }
+    protected void initView(View root) {
+        super.initView(root);
 
-
-    private void initView(View root) {
         tv_detail_location = root.findViewById(R.id.fragment_main_tv_detail_location);
         mapView = root.findViewById(R.id.fragment_main_map);
         map = mapView.getMap();
@@ -51,7 +48,23 @@ public class MainFragment extends Fragment {
         });
     }
 
-    private void initdata() {
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_main;
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+    }
+
+    @OnClick(R.id.fragment_main_rl_evaluate)
+    public void evaluate() {
+        startActivity(new Intent(getActivity(), EvaluateListActivity.class));
+    }
+
+    @OnClick(R.id.fragment_main_rl_card)
+    public void card() {
 
     }
 

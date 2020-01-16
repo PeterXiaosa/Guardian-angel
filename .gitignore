@@ -11,3 +11,8 @@
 /build
 /captures
 .externalNativeBuild
+
+# Keystore files
+*.jks
+
+*.apk

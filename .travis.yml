@@ -26,8 +26,7 @@ android:
 script:
 - "./gradlew :app:assembleRelease"
 before_install:
-- openssl aes-256-cbc -K $encrypted_1f9846efaca8_key -iv $encrypted_1f9846efaca8_iv
-  -in mykeystore.jks.enc -out mykeystore.jks -d
+- openssl aes-256-cbc -K $encrypted_1f9846efaca8_key -iv $encrypted_1f9846efaca8_iv -in mykeystore.jks.enc -out mykeystore.jks -d
 - yes | sdkmanager "platforms;android-26"
 - mkdir -p "$ANDROID_HOME/licenses"
 - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
@@ -37,6 +36,6 @@ deploy:
   provider: releases
   api_key:
     secure: dhGhJMUTZje72ZNpKtnPBH9Dig/tIyjXrIE35D1S1uflZKlvMZZmB65UDGJzXHGtxoqRuaY1U6VB8TZcXU5+7/vuGlMpsD6/qFnepmwPRGxBW4aQrRFAkGh3HBpEd9Assuu/IP3VB0/TOSHOQwAwrkxpyQh5ocxng0WqS0+xqdHZR0YZNwbLbF9zb7GGWiYrtgCAFrh4QYMogATFNp+x7wp4EMFF0O+CO1O2nSpnjOIdZhQXBOnw8V0gVpaR17NbiOBhfDfo34iLAOdGVu/KfBahxzEIhU5PIq6oUz5tUCWDwQa74MvyHZ2Ij1Y2hP53CrF/5Vb4Dl8aF+oaUIzWqwPdBZk7pI0hg8mupLoJNWCeCXG4Y5dT7IQIaQgvLYe74dAE/C+9QFaqlXETXcPUjbFDvVcSMLDk7lfY3fBWKlcWpv0T7tDOGPzl8zWtTgSuWqdtth4iFgTWQwXfGY4v9NpGWOePA0NAekQnxF/fL079+Hj9kDOxoIlTQWGQyR+uxbxqo7hSwmB1koOw1XowWWTajyvpXS7AUbNF5OxL4+FUZHvTE/PlpGyi3sTbFP7BHSV/+5PgdHzTynzdZlxoYVgEVYHFz2DTa2FCSd7sHIJ3pCT7FT+UGRV1fqKZJE09XmiXPxIE8VaOKYWD9gpiZYnV7/wMu/D/JXSjkRm+YPM=
-  file: y
+  file: app/build/outputs/apk/app-release.apk
   on:
     repo: PeterXiaosa/Guardian-angel

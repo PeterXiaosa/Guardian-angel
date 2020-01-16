@@ -27,8 +27,11 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppTheme.Normal"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <activity android:name=".activity.EvaluateListActivity"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".service.RefreshTokenService"
@@ -45,8 +48,8 @@
 
         <activity
             android:name=".activity.ProtectActivity"
-            android:screenOrientation="portrait">
-
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
 
@@ -56,8 +59,7 @@
         </activity>
         <activity
             android:name=".activity.UserActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MapActivity"
             android:screenOrientation="portrait" />
@@ -99,12 +101,9 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-
         <activity
             android:name=".activity.EvaluateActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <service
             android:name="com.baidu.location.f"

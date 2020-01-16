@@ -27,4 +27,19 @@
         <attr name="radius" format="dimension"/>
         <attr name="spacing" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="my_toolbar">
+        <attr name="title" format="string"/>
+        <attr name="left_icon1" format="string"/>
+        <attr name="left_icon2" format="string"/>
+        <attr name="left_icon3" format="string"/>
+        <attr name="right_icon1" format="string"/>
+        <attr name="right_icon2" format="string"/>
+        <attr name="right_icon3" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="function_icon">
+        <attr name="icon_content" format="string"/>
+        <attr name="icon_value" format="string"/>
+    </declare-styleable>
 </resources>

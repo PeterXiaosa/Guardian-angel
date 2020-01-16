@@ -1,5 +1,7 @@
 package com.peter.guardianangel.retrofit;
 
+import android.util.Log;
+
 import com.example.utillib.BuildConfig;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -15,6 +17,8 @@ public class ApiClient {
 
     private static Retrofit mRetrofit;
 
+    private static final String TAG = "ApiClient";
+
     public static Retrofit retrofit(){
         if(mRetrofit == null){
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -22,7 +26,12 @@ public class ApiClient {
 
             if (BuildConfig.DEBUG){
                 // Log信息拦截器
-                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+                    @Override
+                    public void log(String message) {
+                        Log.d(TAG,  message);
+                    }
+                });
                 loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
                 //设置 Debug Log模式
                 builder.addInterceptor(loggingInterceptor);

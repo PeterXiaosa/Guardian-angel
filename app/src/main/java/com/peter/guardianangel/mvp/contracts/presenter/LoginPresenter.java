@@ -36,10 +36,12 @@ public class LoginPresenter extends BasePresenter<LoginView> {
             public void onSuccess(BaseResponse response, JSONObject responseData) {
                 if (response.isSuccess()) {
                     User userinfo = JSON.parseObject(responseData.toJSONString(), User.class);
-//                    User userinfo = new Gson().fromJson(responseData, User.class);
                     UserData.getInstance().setUser(userinfo);
                     Log.d(TAG, userinfo.toString());
-                    mvpView.loginSuccess();
+                    String partnerAccount = userinfo.getPartnerAccount();
+                    String loveAuth = userinfo.getLoveAuth();
+
+                    mvpView.loginSuccess(partnerAccount != null && loveAuth != null && !partnerAccount.isEmpty() && !loveAuth.isEmpty());
                 }else {
                     mvpView.loginFail(response.msg);
                 }

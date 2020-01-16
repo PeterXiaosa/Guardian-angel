@@ -2,9 +2,11 @@ package com.peter.guardianangel.mvp.contracts.presenter;
 
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.peter.guardianangel.base.BasePresenter;
 import com.peter.guardianangel.bean.MyLocation;
+import com.peter.guardianangel.bean.User;
 import com.peter.guardianangel.data.EventMessage;
 import com.peter.guardianangel.data.ServiceConstant;
 import com.peter.guardianangel.data.SocketClient;
@@ -143,7 +145,32 @@ public class MatchCodePresenter extends BasePresenter<MatchCodeView> {
     }
 
     private void connectSuccess() {
-        mvpView.jumpMainPage();
+        // 配对成功之后，主动查询用户信息更新伙伴信息
+        User user = UserData.getInstance().getUser();
+        addSubscription(api.queryUserInfo(user), new ApiCallback<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse response, JSONObject responseData) {
+                if (response.isSuccess()) {
+                    User userinfo = JSON.parseObject(responseData.toJSONString(), User.class);
+                    UserData.getInstance().setUser(userinfo);
+                    mvpView.jumpMainPage();
+                }else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
+
+
     }
 
     private void connectError() {

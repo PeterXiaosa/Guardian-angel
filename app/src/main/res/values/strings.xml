@@ -1,4 +1,36 @@
 <resources>
+
+    <!-- IconFont  -->
+    <string name="view">&#xe633;</string>
+    <!-- 箭头（向下） -->
+    <string name="arrow_down">&#xe658;</string>
+    <!-- 箭头（向右） -->
+    <string name="arrow_right">&#xe65c;</string>
+    <!-- 箭头（向上） -->
+    <string name="arrow_up">&#xe659;</string>
+    <!-- 箭头（向左） -->
+    <string name="arrow_left">&#xe65a;</string>
+    <!-- 设置 -->
+    <string name="setting">&#xe640;</string>
+    <!-- 分享 -->
+    <string name="share">&#xe63f;</string>
+    <!-- 关于 -->
+    <string name="about">&#xe60e;</string>
+    <!-- 检查更新 -->
+    <string name="update">&#xe628;</string>
+    <!-- 帮助反馈 -->
+    <string name="feekback">&#xe77c;</string>
+    <!-- 编辑 -->
+    <string name="edit">&#xe63d;</string>
+    <!-- 返回 -->
+    <string name="back">&#xe618;</string>
+    <!-- 保存 -->
+    <string name="save">&#xe762;</string>
+    <!-- 卡券 -->
+    <string name="card">&#xe612;</string>
+    <!-- 评价 -->
+    <string name="judge">&#xe619;</string>
+
     <string name="app_name">天使守护</string>
     <string name="title_activity_match_code">MatchCodeActivity</string>
     <string name="title_activity_user">UserActivity</string>

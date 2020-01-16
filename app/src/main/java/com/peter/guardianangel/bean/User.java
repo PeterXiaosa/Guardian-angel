@@ -13,11 +13,13 @@ public class User implements Parcelable {
 
     private String deviceId;
 
-    private String matchcode;
-
     private String name;
 
     private String birthday;
+
+    private String loveAuth;
+
+    private String partnerAccount;
 
     // 1 is male.
     private  boolean sex;
@@ -25,15 +27,15 @@ public class User implements Parcelable {
     public User() {
     }
 
-
     protected User(Parcel in) {
         account = in.readString();
         password = in.readString();
         genkey = in.readString();
         deviceId = in.readString();
-        matchcode = in.readString();
         name = in.readString();
         birthday = in.readString();
+        loveAuth = in.readString();
+        partnerAccount = in.readString();
         sex = in.readByte() != 0;
     }
 
@@ -81,14 +83,6 @@ public class User implements Parcelable {
         this.deviceId = deviceId;
     }
 
-    public String getMatchcode() {
-        return matchcode;
-    }
-
-    public void setMatchcode(String matchcode) {
-        this.matchcode = matchcode;
-    }
-
     public String getName() {
         return name;
     }
@@ -113,6 +107,22 @@ public class User implements Parcelable {
         this.birthday = birthday;
     }
 
+    public String getLoveAuth() {
+        return loveAuth;
+    }
+
+    public void setLoveAuth(String loveAuth) {
+        this.loveAuth = loveAuth;
+    }
+
+    public String getPartnerAccount() {
+        return partnerAccount;
+    }
+
+    public void setPartnerAccount(String partnerAccount) {
+        this.partnerAccount = partnerAccount;
+    }
+
     @Override
     public String toString() {
         return "account : " + account + ", name : " + name +
@@ -130,9 +140,10 @@ public class User implements Parcelable {
         dest.writeString(password);
         dest.writeString(genkey);
         dest.writeString(deviceId);
-        dest.writeString(matchcode);
         dest.writeString(name);
         dest.writeString(birthday);
+        dest.writeString(loveAuth);
+        dest.writeString(partnerAccount);
         dest.writeByte((byte) (sex ? 1 : 0));
     }
 }
