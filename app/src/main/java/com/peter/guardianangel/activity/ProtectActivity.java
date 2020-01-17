@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.peter.guardianangel.R;
 import com.peter.guardianangel.bean.User;
+import com.peter.guardianangel.data.EventMessage;
+import com.peter.guardianangel.data.ServiceConstant;
 import com.peter.guardianangel.data.SocketClient;
 import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.fragment.MainFragment;
@@ -27,6 +29,11 @@ import com.peter.guardianangel.fragment.UserFragment;
 import com.peter.guardianangel.service.LocationService;
 import com.peter.guardianangel.util.DoubleClickExitHelper;
 import com.peter.guardianangel.util.FragmentHelper;
+import com.peter.guardianangel.util.ToastHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,6 +114,8 @@ public class ProtectActivity extends AppCompatActivity {
         startService();
 
         longConnect();
+
+        EventBus.getDefault().register(this);
     }
 
     private void longConnect() {
@@ -175,6 +184,26 @@ public class ProtectActivity extends AppCompatActivity {
             navView.setSelectedItemId(R.id.navigation_dashboard);
         } else if (!fragment3.isHidden()) {
             navView.setSelectedItemId(R.id.navigation_notifications);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(EventMessage messageEvent) {
+        int action = messageEvent.getAction();
+        Object data = messageEvent.getData();
+        String content = messageEvent.getContent();
+        switch (action) {
+            case ServiceConstant.SERVICE_TYPE_MESSAGE_STRING:
+                ToastHelper.show(getApplicationContext(), content);
+                break;
+            default:
+                break;
         }
     }
 }

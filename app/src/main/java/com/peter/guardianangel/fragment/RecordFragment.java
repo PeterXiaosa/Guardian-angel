@@ -41,13 +41,6 @@ public class RecordFragment extends BaseFragment {
         return R.layout.fragment_record;
     }
 
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-////        return super.onCreateView(inflater, container, savedInstanceState);
-//        return inflater.inflate(R.layout.fragment_record,container,false);
-//    }
-
     @OnClick(R.id.fragment_record_btn_send)
     public void send() {
         SocketClient client = UserData.getInstance().getSocketClient();
@@ -66,5 +59,11 @@ public class RecordFragment extends BaseFragment {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unRegister();
     }
 }

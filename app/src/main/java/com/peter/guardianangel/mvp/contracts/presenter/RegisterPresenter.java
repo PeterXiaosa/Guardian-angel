@@ -22,9 +22,9 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
 
     }
 
-    public void register(String accouont, String password) {
+    public void register(String account, String password) {
         User user = new User();
-        user.setAccount(accouont);
+        user.setAccount(account);
         user.setPassword(password);
         user.setGenkey(UserData.getInstance().getGenkey());
         user.setDeviceId(UserData.getInstance().getDeviceId());

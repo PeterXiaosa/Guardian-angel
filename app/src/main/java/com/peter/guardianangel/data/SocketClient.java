@@ -1,5 +1,7 @@
 package com.peter.guardianangel.data;
 
+import android.util.Log;
+
 import com.peter.guardianangel.retrofit.Api;
 
 import org.greenrobot.eventbus.EventBus;
@@ -14,6 +16,8 @@ import java.nio.ByteBuffer;
  *  长连接客户端
  */
 public class SocketClient {
+
+    private final String TAG = getClass().getSimpleName();
 
     private static String urlStr = "ws://%s:8080/JavaWeb_war_exploded/mywebsocket/%s/%s/%s";
 
@@ -31,11 +35,13 @@ public class SocketClient {
             client = new WebSocketClient(uri) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
+                    Log.d(TAG, "onOpen()");
                     EventBus.getDefault().post(new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_CONNECT_OPEN).buildEvent());
                 }
 
                 @Override
                 public void onMessage(String message) {
+                    Log.d(TAG, "onMessage()");
                     if ("startconnectyourpartner".equals(message)) {
                         EventMessage.Builder builder = new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_MATCH_SUCCESS);
                         EventBus.getDefault().post(builder.buildEvent());
@@ -49,6 +55,7 @@ public class SocketClient {
 
                 @Override
                 public void onMessage(ByteBuffer bytes) {
+                    Log.d(TAG, "onMessage()");
                     EventMessage.Builder builder = new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_MESSAGE_BYTE)
                             .setData(bytes);
                     EventBus.getDefault().post(builder.buildEvent());
@@ -56,6 +63,7 @@ public class SocketClient {
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
+                    Log.d(TAG, "onClose()");
                     EventMessage.Builder builder = new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_CONNECT_CLOSE)
                             .setContent(reason);
                     EventBus.getDefault().post(builder.buildEvent());
@@ -63,6 +71,7 @@ public class SocketClient {
 
                 @Override
                 public void onError(Exception ex) {
+                    Log.d(TAG, "onError()");
                     EventBus.getDefault().post(new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_CONNECT_ERROR).buildEvent());
                 }
             };
@@ -76,7 +85,9 @@ public class SocketClient {
     }
 
     public void sendMessage(String message) {
-        client.send(message);
+        if (client.isOpen()) {
+            client.send(message);
+        }
     }
 
     public void close(){
