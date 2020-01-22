@@ -18,25 +18,28 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.peter.guardianangel.BaseActivity;
 import com.peter.guardianangel.R;
+import com.peter.guardianangel.view.MyToolbar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MapActivity extends BaseActivity {
+public class MapActivity extends BaseActivity implements MyToolbar.IToolbarClick{
 
 
+    @BindView(R.id.activity_map_toolbar)
+    MyToolbar toolbar;
     @BindView(R.id.activity_map_mapview)
     MapView mapView;
-    @BindView(R.id.activity_message_ig_back)
-    ImageView iv_back;
-    @BindView(R.id.activity_message_ig_location)
-    ImageView iv_location;
+//    @BindView(R.id.activity_message_ig_back)
+//    ImageView iv_back;
+//    @BindView(R.id.activity_message_ig_location)
+//    ImageView iv_location;
 
     BaiduMap map;
     LocationClient locationClient;
     boolean isFirstLocation;
 
-    LatLng GEO_SHANGHAI = new LatLng(31.227, 121.481);
+    LatLng GEO_SHANGHAI = new LatLng(27.744280, 115.395567);
 
     @Override
     protected int getLayoutId() {
@@ -63,11 +66,24 @@ public class MapActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        toolbar.setToolbarClick(this);
+        LatLng ll = GEO_SHANGHAI;
+
+        MapStatus.Builder builder = new MapStatus.Builder();
+        builder.target(ll).zoom(19.0f);
+
         map = mapView.getMap();
         map.setMyLocationEnabled(true);
-        MapStatusUpdate statusUpdate = MapStatusUpdateFactory.newLatLng(GEO_SHANGHAI);
+
+        MyLocationData locData = new MyLocationData.Builder()
+                .accuracy((float) 71.25571)
+                .direction((float)-1.0).latitude(ll.latitude)
+                .longitude(ll.longitude).build();
+        map.setMyLocationData(locData);
+//        MapStatusUpdate statusUpdate = MapStatusUpdateFactory.newLatLng(GEO_SHANGHAI);
+        map.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
 //        map.setMapStatus(statusUpdate);
-        map.animateMapStatus(statusUpdate);
+//        map.animateMapStatus(statusUpdate);
     }
 
 
@@ -92,16 +108,6 @@ public class MapActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    @OnClick(R.id.activity_message_ig_back)
-    public void back() {
-        finish();
-    }
-
-    @OnClick(R.id.activity_message_ig_location)
-    public void location() {
-        isFirstLocation = true;
-    }
-
     public void setPosition2Center(BaiduMap map, BDLocation bdLocation, Boolean isShowLoc) {
         MyLocationData locData = new MyLocationData.Builder()
                 .accuracy(bdLocation.getRadius())
@@ -114,6 +120,15 @@ public class MapActivity extends BaseActivity {
             MapStatus.Builder builder = new MapStatus.Builder();
             builder.target(ll).zoom(19.0f);
             map.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+        }
+    }
+
+    @Override
+    public void clickIcon(boolean isLeft, int position) {
+        if (isLeft && position == 1) {
+            finish();
+        } else if (!isLeft && position ==1) {
+            isFirstLocation = true;
         }
     }
 

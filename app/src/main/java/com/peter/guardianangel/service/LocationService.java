@@ -9,6 +9,8 @@ import android.util.Log;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.peter.guardianangel.bean.MyLocation;
+import com.peter.guardianangel.data.SocketClient;
+import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.data.WebSocketConnect;
 import com.peter.guardianangel.util.LocationListener;
 import com.peter.guardianangel.util.SerializeUtil;
@@ -21,6 +23,8 @@ import java.util.TimerTask;
 public class LocationService extends Service implements LocationListener.Calback{
     
     private String TAG = "LocationService";
+
+    private final long location_interval = 1000 * 5;
 
     LocationClient locationClient;
 
@@ -55,16 +59,22 @@ public class LocationService extends Service implements LocationListener.Calback
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand: ");
+        if (!locationClient.isStarted()){
+            locationClient.start();
+        }
+
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                if (!locationClient.isStarted()){
-                    locationClient.start();
-                }
+                // 上报位置信息给服务器
+                SocketClient client = UserData.getInstance().getSocketClient();
+                MyLocation myLocation = UserData.getInstance().getLocation();
+                client.sendMessage(myLocation);
+                Log.d(TAG, "upload location message to server");
             }
         };
         Timer timer = new Timer();
-        timer.schedule(timerTask, 0 ,1000 * 50);
+        timer.schedule(timerTask, 0 , location_interval);
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -104,14 +114,15 @@ public class LocationService extends Service implements LocationListener.Calback
 
     @Override
     public void setLocation(double accuracy, double direction, double latitude, double longitude) {
-        if (webSocketClient == null) {
-            webSocketClient = WebSocketConnect.getInstance().getWebSocketClient();
-            if (webSocketClient != null) {
-                sendLocation(accuracy, direction, latitude, longitude);
-            }
-        }else {
-            sendLocation(accuracy, direction, latitude, longitude);
-        }
+        sendLocation(accuracy, direction, latitude, longitude);
+//        if (webSocketClient == null) {
+//            webSocketClient = WebSocketConnect.getInstance().getWebSocketClient();
+//            if (webSocketClient != null) {
+//                sendLocation(accuracy, direction, latitude, longitude);
+//            }
+//        }else {
+//            sendLocation(accuracy, direction, latitude, longitude);
+//        }
     }
 
     private void sendLocation(double accuracy, double direction, double latitude, double longitude){
@@ -121,7 +132,8 @@ public class LocationService extends Service implements LocationListener.Calback
             myLocation.setDirection(direction);
             myLocation.setLatitude(latitude);
             myLocation.setLongitude(longitude);
-            webSocketClient.send(SerializeUtil.serialize(myLocation));
+            UserData.getInstance().setLocation(myLocation);
+//            webSocketClient.send(SerializeUtil.serialize(myLocation));
             Log.d(TAG, "setLatitude: " + latitude + ", setLongitude: " + longitude);
         } catch (InstantiationException e) {
             e.printStackTrace();

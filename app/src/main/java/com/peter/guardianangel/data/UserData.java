@@ -33,6 +33,9 @@ public class UserData {
 
     private SocketClient socketClient = null;
 
+    // 用户当前位置
+    private MyLocation location;
+
     private UserData() {
     }
 
@@ -113,5 +116,13 @@ public class UserData {
 
     public void setSocketClient(SocketClient socketClient) {
         this.socketClient = socketClient;
+    }
+
+    public MyLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(MyLocation location) {
+        this.location = location;
     }
 }

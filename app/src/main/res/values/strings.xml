@@ -30,6 +30,8 @@
     <string name="card">&#xe612;</string>
     <!-- 评价 -->
     <string name="judge">&#xe619;</string>
+    <!-- 定位 -->
+    <string name="region">&#xe642;</string>
 
     <string name="app_name">天使守护</string>
     <string name="title_activity_match_code">MatchCodeActivity</string>

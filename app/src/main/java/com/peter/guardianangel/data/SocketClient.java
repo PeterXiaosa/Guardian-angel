@@ -3,6 +3,7 @@ package com.peter.guardianangel.data;
 import android.util.Log;
 
 import com.peter.guardianangel.retrofit.Api;
+import com.peter.guardianangel.util.SerializeUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.java_websocket.client.WebSocketClient;
@@ -63,7 +64,7 @@ public class SocketClient {
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
-                    Log.d(TAG, "onClose()");
+                    Log.d(TAG, "onClose() : " + reason);
                     EventMessage.Builder builder = new EventMessage.Builder(ServiceConstant.SERVICE_TYPE_CONNECT_CLOSE)
                             .setContent(reason);
                     EventBus.getDefault().post(builder.buildEvent());
@@ -88,6 +89,15 @@ public class SocketClient {
         if (client.isOpen()) {
             client.send(message);
         }
+    }
+
+    public void sendMessage(Object object) {
+        byte[] bytes = SerializeUtil.serialize(object);
+        if (client.isOpen()) {
+            client.send(bytes);
+            Log.d(TAG, "send object message");
+        }
+        Log.d(TAG, "socket is closed");
     }
 
     public void close(){

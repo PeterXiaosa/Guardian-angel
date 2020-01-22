@@ -104,6 +104,8 @@ public class EvaluateListActivity extends BaseActivity implements ExPandableList
     @Override
     public void onChildItemClick(int groupPosition, int childPosition) {
         Intent intent = new Intent(EvaluateListActivity.this, EvaluateActivity.class);
+        ChildrenData childrenData = dataList.get(groupPosition).getChildrenDataList().get(childPosition);
+        intent.putExtra("data", childrenData);
         startActivity(intent);
     }
 

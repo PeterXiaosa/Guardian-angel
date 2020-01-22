@@ -8,36 +8,14 @@
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".activity.MapActivity">
-    <RelativeLayout
+
+    <com.peter.guardianangel.view.MyToolbar
+        android:id="@+id/activity_map_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_vertical"
-        android:background="@color/title_blue">
-
-        <ImageView
-            android:id="@+id/activity_message_ig_back"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/btn_back_normal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_vertical"
-            android:text="实时位置"
-            android:textColor="@color/white"
-            android:textSize="18sp"/>
-
-        <ImageView
-            android:id="@+id/activity_message_ig_location"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/img_pic_address"/>
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        app:title="实时位置"
+        app:left_icon1="@string/back"
+        app:right_icon1="@string/region"/>
 
     <com.baidu.mapapi.map.MapView
         android:id="@+id/activity_map_mapview"

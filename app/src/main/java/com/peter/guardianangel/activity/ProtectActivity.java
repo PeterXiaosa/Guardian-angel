@@ -8,13 +8,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.peter.guardianangel.R;
@@ -26,6 +24,9 @@ import com.peter.guardianangel.data.UserData;
 import com.peter.guardianangel.fragment.MainFragment;
 import com.peter.guardianangel.fragment.RecordFragment;
 import com.peter.guardianangel.fragment.UserFragment;
+import com.peter.guardianangel.mvp.MvpActivity;
+import com.peter.guardianangel.mvp.contracts.presenter.ProtectPresenter;
+import com.peter.guardianangel.mvp.contracts.view.ProtectView;
 import com.peter.guardianangel.service.LocationService;
 import com.peter.guardianangel.util.DoubleClickExitHelper;
 import com.peter.guardianangel.util.FragmentHelper;
@@ -38,13 +39,16 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProtectActivity extends AppCompatActivity {
+import butterknife.BindView;
+
+public class ProtectActivity extends MvpActivity<ProtectPresenter> implements ProtectView {
 
     private Fragment fragment1, fragment2, fragment3;
     private int lastShowFragment = 3;
 
     protected DoubleClickExitHelper mDoubleClickExitHelper;//双击后退键，退出程序
 
+    @BindView(R.id.nav_view)
     BottomNavigationView navView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -99,10 +103,20 @@ public class ProtectActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_protect);
-        navView = findViewById(R.id.nav_view);
+    protected int getLayoutId() {
+        return R.layout.activity_protect;
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
 
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         mDoubleClickExitHelper = new DoubleClickExitHelper(this);
@@ -114,8 +128,11 @@ public class ProtectActivity extends AppCompatActivity {
         startService();
 
         longConnect();
+    }
 
-        EventBus.getDefault().register(this);
+    @Override
+    protected ProtectPresenter createPresenter() {
+        return new ProtectPresenter(this);
     }
 
     private void longConnect() {
@@ -127,6 +144,7 @@ public class ProtectActivity extends AppCompatActivity {
         if (partnerAccount != null && loveAuth != null && !partnerAccount.isEmpty() && !loveAuth.isEmpty()) {
             SocketClient socketClient = new SocketClient("-1");
             socketClient.connect();
+            UserData.getInstance().setSocketClient(socketClient);
         }
     }
 
@@ -190,6 +208,7 @@ public class ProtectActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        stopService(new Intent(this, LocationService.class));
         EventBus.getDefault().unregister(this);
     }
 
@@ -202,8 +221,69 @@ public class ProtectActivity extends AppCompatActivity {
             case ServiceConstant.SERVICE_TYPE_MESSAGE_STRING:
                 ToastHelper.show(getApplicationContext(), content);
                 break;
+            case ServiceConstant.SERVICE_TYPE_CONNECT_OPEN:
+                connectionOpen();
+                break;
+            case ServiceConstant.SERVICE_TYPE_MATCH_SUCCESS:
+                connectionSuccess();
+                break;
+            case ServiceConstant.SERVICE_TYPE_CONNECT_CLOSE:
+                connectionClose(content);
+                break;
+            case ServiceConstant.SERVICE_TYPE_CONNECT_ERROR:
+                connectError();
             default:
                 break;
         }
+    }
+
+    private void connectError() {
+
+    }
+
+    @Override
+    public void connectionSuccess() {
+        // 配对成功之后，主动查询用户信息更新伙伴信息
+        User user = UserData.getInstance().getUser();
+
+//        addSubscription(api.queryUserInfo(user), new ApiCallback<BaseResponse>() {
+//            @Override
+//            public void onSuccess(BaseResponse response, JSONObject responseData) {
+//                if (response.isSuccess()) {
+//                    User userinfo = JSON.parseObject(responseData.toJSONString(), User.class);
+//                    UserData.getInstance().setUser(userinfo);
+//                    mvpView.jumpMainPage();
+//                }else {
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//
+//            }
+//        });
+    }
+
+    @Override
+    public void connectionOpen() {
+        Log.d("peterfu", "连接建立成功");
+//        mvpView.connectionOpen();
+    }
+
+    @Override
+    public void connectionClose(String reason) {
+        Log.d("peterfu", "连接关闭");
+        ToastHelper.show(this, "连接关闭 : " + reason);
+    }
+
+    @Override
+    public void connectionError() {
+
     }
 }

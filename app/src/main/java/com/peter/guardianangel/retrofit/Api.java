@@ -1,5 +1,6 @@
 package com.peter.guardianangel.retrofit;
 
+import com.peter.guardianangel.bean.Evaluate;
 import com.peter.guardianangel.bean.User;
 
 import io.reactivex.Observable;
@@ -37,6 +38,10 @@ public interface Api {
     // 查询用户信息
     @POST("certificate/queryuserinfo")
     Observable<BaseResponse> queryUserInfo(@Body User userInfo);
+
+    // 新增用户评论
+    @POST("protect/user/evaluate")
+    Observable<BaseResponse> addEvaluate(@Body Evaluate evaluate);
 
     //TODO RequestBody传入服务器的参数不对，服务器无法接受到Json格式，不想创建JavaBean的前提下需要使用RequetBody。
     //TODO 使用@FieldMap需要传入HashMap，同时需要添加注解@FormUrlEncoded。

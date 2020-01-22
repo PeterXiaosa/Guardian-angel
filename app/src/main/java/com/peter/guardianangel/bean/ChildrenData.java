@@ -1,6 +1,9 @@
 package com.peter.guardianangel.bean;
 
-public class ChildrenData {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ChildrenData implements Parcelable {
     private int month;
     // 该月第几周
     private int week;
@@ -8,6 +11,28 @@ public class ChildrenData {
     private int start;
     //结束日
     private int end;
+
+    public ChildrenData() {
+    }
+
+    protected ChildrenData(Parcel in) {
+        month = in.readInt();
+        week = in.readInt();
+        start = in.readInt();
+        end = in.readInt();
+    }
+
+    public static final Creator<ChildrenData> CREATOR = new Creator<ChildrenData>() {
+        @Override
+        public ChildrenData createFromParcel(Parcel in) {
+            return new ChildrenData(in);
+        }
+
+        @Override
+        public ChildrenData[] newArray(int size) {
+            return new ChildrenData[size];
+        }
+    };
 
     public int getMonth() {
         return month;
@@ -39,5 +64,18 @@ public class ChildrenData {
 
     public void setEnd(int end) {
         this.end = end;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(month);
+        dest.writeInt(week);
+        dest.writeInt(start);
+        dest.writeInt(end);
     }
 }
