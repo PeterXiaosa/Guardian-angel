@@ -16,8 +16,8 @@ public class SerializeUtil {
      * @return
      */
     public static byte[] serialize(Object object) {
-        ObjectOutputStream oos = null;
-        ByteArrayOutputStream baos = null;
+        ObjectOutputStream oos;
+        ByteArrayOutputStream baos;
         try {
             // 序列化
             baos = new ByteArrayOutputStream();

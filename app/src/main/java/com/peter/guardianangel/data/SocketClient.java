@@ -2,6 +2,7 @@ package com.peter.guardianangel.data;
 
 import android.util.Log;
 
+import com.peter.guardianangel.bean.MyLocation;
 import com.peter.guardianangel.retrofit.Api;
 import com.peter.guardianangel.util.SerializeUtil;
 
@@ -93,11 +94,14 @@ public class SocketClient {
 
     public void sendMessage(Object object) {
         byte[] bytes = SerializeUtil.serialize(object);
+
+        MyLocation location = (MyLocation) SerializeUtil.unserialize(bytes);
         if (client.isOpen()) {
             client.send(bytes);
             Log.d(TAG, "send object message");
+        } else {
+            Log.d(TAG, "socket is closed");
         }
-        Log.d(TAG, "socket is closed");
     }
 
     public void close(){

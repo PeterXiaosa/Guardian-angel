@@ -231,43 +231,18 @@ public class ProtectActivity extends MvpActivity<ProtectPresenter> implements Pr
                 connectionClose(content);
                 break;
             case ServiceConstant.SERVICE_TYPE_CONNECT_ERROR:
-                connectError();
+                connectionError();
             default:
                 break;
         }
     }
 
-    private void connectError() {
-
-    }
 
     @Override
     public void connectionSuccess() {
         // 配对成功之后，主动查询用户信息更新伙伴信息
         User user = UserData.getInstance().getUser();
-
-//        addSubscription(api.queryUserInfo(user), new ApiCallback<BaseResponse>() {
-//            @Override
-//            public void onSuccess(BaseResponse response, JSONObject responseData) {
-//                if (response.isSuccess()) {
-//                    User userinfo = JSON.parseObject(responseData.toJSONString(), User.class);
-//                    UserData.getInstance().setUser(userinfo);
-//                    mvpView.jumpMainPage();
-//                }else {
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//
-//            }
-//        });
+        presenter.queryUserInfo(user);
     }
 
     @Override
